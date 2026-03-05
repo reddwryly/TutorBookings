@@ -8,12 +8,12 @@ This personal project is a web application that connects tutors and students. It
 
 - HTML/CSS/JavaScript
 - SQLite 
-- C#/ASP.Net
+- C#/ASP.Net/Dapper
 
 ## Project Status
 
-Currently Working On: SQLite database design
+Currently Working On: Connecting the Database to dynamic content with Dapper
 
-> Up Next: Connecting the database to dependent form inputs, and other data to be displayed to the user
+> Up Next: Planning the recurring appointment logic and admin page
 
-> Completed: Baseline HTML/CSS
+> Completed: Baseline HTML/CSS and Database design/implementation
