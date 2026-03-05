@@ -53,16 +53,6 @@ header {
     left: 0;
 }
 
-    header::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 100%;
-        width: 100%;
-        height: 80px;
-        background-image: linear-gradient(to bottom, rgba(236, 88, 0, 1), rgba(236, 88, 0, 0));
-    }
-
 footer {
     background-color: #EC5800;
     padding: 20px;

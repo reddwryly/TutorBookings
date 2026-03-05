@@ -9,7 +9,7 @@
                     <td><img src="favicon.io" /></td>
                     <td>
                         <h3>Tutor Name</h3>
-                        <p>Tutor Bio Here</p>
+                        <p>Tutor Bio Heree</p>
                     </td>
                 </tr>
             </table>
