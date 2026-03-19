@@ -23,8 +23,12 @@
                 <p>If you think you would be a good fit or have other tutoring questions please contact our tutoring coordinator Ms.Tutor at MTutor@email.com !</p>
                 <br />
                 <h3>Courses Available for Tutoring</h3>
-                <!--populate from DB-->
-                <p>*place holder</p>
+                <!--Not yet working VV-->
+                <asp:Repeater ID="rptCourse" runat="server">
+                    <ItemTemplate>
+                        <li><%# Eval("Name") %></li> 
+                    </ItemTemplate>
+                </asp:Repeater>
             </div>
     </main>
 </asp:Content>
