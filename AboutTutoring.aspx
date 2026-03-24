@@ -1,4 +1,4 @@
-﻿<%@ Page Title="About Tutoring" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AboutTutoring.aspx.cs" Inherits="TutorBookings.About" %>
+﻿<%@ Page Title="About Tutoring" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AboutTutoring.aspx.cs" Inherits="TutorBookings.AboutTutoring" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <main aria-labelledby="title">
@@ -23,10 +23,10 @@
                 <p>If you think you would be a good fit or have other tutoring questions please contact our tutoring coordinator Ms.Tutor at MTutor@email.com !</p>
                 <br />
                 <h3>Courses Available for Tutoring</h3>
-                <!--Not yet working VV-->
-                <asp:Repeater ID="rptCourse" runat="server">
+                <!--dynamic list from db-->
+                <asp:Repeater ID="CoursesList" runat="server">
                     <ItemTemplate>
-                        <li><%# Eval("Name") %></li> 
+                        <li><%# Eval("CourseCode") %> - <%# Eval("Name") %></li> 
                     </ItemTemplate>
                 </asp:Repeater>
             </div>

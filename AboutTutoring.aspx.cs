@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.EnterpriseServices;
@@ -9,11 +10,9 @@ using System.Web.UI.WebControls;
 using TutorBookings.Database_SQL;
 using static TutorBookings.Database_SQL.Models;
 
-//Database connection not working yet** 
-
 namespace TutorBookings
 {
-    public partial class About : Page
+    public partial class AboutTutoring : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -25,11 +24,11 @@ namespace TutorBookings
 
         private void LoadCourses() {
             using (var db = DatabaseHelper.Connect()) {
-           
-                var courses = db.Query<Course>("SELECT CourseCode, Name FROM Course").ToList();
+                var sql = "SELECT CourseCode, Name FROM Course";
+                var Course = db.Query<Course>(sql).ToList();
 
-                rptCourse.DataSource = courses;
-                rptCourse.DataBind();
+                CoursesList.DataSource = Course;
+                CoursesList.DataBind();
             }
         }
     }

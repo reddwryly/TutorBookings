@@ -10,13 +10,20 @@ namespace TutorBookings.Database_SQL
 {
     public class DatabaseHelper
     {
-        private static string connString = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
-        
         public static SQLiteConnection Connect()
         {
-            var connection = new SQLiteConnection(connString);
-            connection.Open();
-            return connection;
+            try
+            {
+                var path = HttpContext.Current.Server.MapPath("~/App_Data/TutorDatabase");
+                var connString = $"Data Source={path};Version=3;";
+                var connection = new SQLiteConnection(connString);
+                connection.Open();
+                return connection;
+            } catch (Exception ex)
+            {
+                throw new Exception("connection failed: " + ex.Message);
+            }
+
         }
     }
 }

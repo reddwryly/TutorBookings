@@ -11,16 +11,16 @@ namespace TutorBookings
 {
 
 
-    public partial class About
+    public partial class AboutTutoring
     {
 
         /// <summary>
-        /// rptCourse control.
+        /// CoursesList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptCourse;
+        protected global::System.Web.UI.WebControls.Repeater CoursesList;
     }
 }
