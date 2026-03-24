@@ -12,8 +12,13 @@ This personal project is a web application that connects tutors and students. It
 
 ## Project Status
 
-Currently Working On: Connecting the Database to dynamic content with Dapper
+Currently Working On: 
+ - Writing queries for dynamic content
 
-> Up Next: Planning the recurring appointment logic and admin page
+> Up Next:
+> * Planning the recurring appointment logic and admin page
 
-> Completed: Baseline HTML/CSS and Database design/implementation
+> Completed:
+> * Baseline HTML/CSS
+> * Database design/implementation
+> * Database Connection
