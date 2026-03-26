@@ -3,7 +3,7 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <main>
-        <div>
+        <div class="Main">
             <!--Dynamic Content-->
             <fieldset>
                 <label for="tutors">Tutor:</label>

@@ -7,8 +7,8 @@
     font-size: 150%;
 }
 
-div {
-    padding-top: 30px;
+.Main {
+    padding-top: 200px;
     padding-left: 40px;
     padding-right: 40px;
     padding-bottom: 50px;
@@ -57,4 +57,21 @@ footer {
     background-color: #EC5800;
     padding: 20px;
     width: 100%;
+}
+
+.MeetTutors {
+    display: flex;
+    align-items: flex-start; /* keeps text aligned to top */
+    gap: 15px; /* space between image and text */
+    margin-bottom: 20px;
+}
+
+.TutorBio {
+    display: flex;
+    flex-direction: column;
+}
+
+.TutorImg {
+    width: 500px;
+    object-fit: cover;
 }

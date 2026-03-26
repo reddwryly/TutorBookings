@@ -2,17 +2,18 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <main>
-        <div>
+        <div class="Main">
             <!--Dynamic Content-->
-            <!--tutor pic, name, bio-->
-
-            <!--somthing is wrong dependednt on label for some reaosn (extra thing small syntax thing)-->
-            <asp:Label ID="debug" runat="server" Text=""/>
             <asp:Repeater ID="Tutors" runat="server">
                 <ItemTemplate>
-                    <img src="\IMG\<%# Eval("Picture") %>"/>
-                    <h3><%# Eval("FirstName") %> <%# Eval("LastName") %></h3>
-                    <p><%# Eval("Bio") %></p>
+                    <div class="MeetTutors">
+                        <img src="/IMG/<%# Eval("Picture") %>" class="TutorImg"/>
+
+                        <div class="TutorBio">
+                            <h3><%# Eval("FirstName") %> <%# Eval("LastName") %></h3>
+                            <p><%# Eval("Bio") %></p>
+                        </div>
+                    </div>
                 </ItemTemplate>
             </asp:Repeater>
         </div>

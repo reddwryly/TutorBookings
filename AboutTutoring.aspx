@@ -2,7 +2,7 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <main aria-labelledby="title">
-            <div>
+            <div class="Main">
                 <h3>Why get turoing?</h3>
                 <p>Tutors can help with:</p>
                 <ul>
@@ -13,6 +13,19 @@
                 <h3>How it works!</h3> 
                 <p>For no cost, students can book a tutoring apointment for a course with a student who has previously talken the class and excelled. Book a time that works for the both of you, meet up for an hour long session and get studying! Bring homework, practice exams, or a topic you need help with. Meet in the library, check in, and your tutor will take it from there. Book your appintment today!</p>
                 <a class="link" href="BookTutoring.aspx">Book Tutoring</a>
+
+                <h3>Courses Available for Tutoring</h3>
+
+                <!--dynamic list from db-->
+                <ul>
+                    <!--ASP.NET server control displays all content like a loop-->
+                    <asp:Repeater ID="CoursesList" runat="server">
+                        <ItemTemplate>
+                            <li><%# Eval("CourseCode") %> - <%# Eval("Name") %></li> <!--EVAL("Field name") pulls data from the databind-->
+                        </ItemTemplate>
+                    </asp:Repeater>
+                </ul>
+
                 <h3>Want to become a tutor?</h3>
                 <p>You must have:</p>
                 <ul>
@@ -22,13 +35,6 @@
                 </ul>
                 <p>If you think you would be a good fit or have other tutoring questions please contact our tutoring coordinator Ms.Tutor at MTutor@email.com !</p>
                 <br />
-                <h3>Courses Available for Tutoring</h3>
-                <!--dynamic list from db-->
-                <asp:Repeater ID="CoursesList" runat="server">
-                    <ItemTemplate>
-                        <li><%# Eval("CourseCode") %> - <%# Eval("Name") %></li> 
-                    </ItemTemplate>
-                </asp:Repeater>
             </div>
     </main>
 </asp:Content>
