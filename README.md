@@ -13,7 +13,7 @@ This personal project is a web application that connects tutors and students. It
 ## Project Status
 
 Currently Working On: 
- - Writing queries for dynamic content
+ - Dependent form selections for scheduling on Book Tutoring Page 
 
 > Up Next:
 > * Planning the recurring appointment logic and admin page
