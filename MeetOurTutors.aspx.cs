@@ -22,7 +22,6 @@ namespace TutorBookings
             }
         }
 
-        //not yet working
         protected void LoadTutors()
         {
             using (var db = DatabaseHelper.Connect())

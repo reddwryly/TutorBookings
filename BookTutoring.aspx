@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Book Tutoring" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="BookTutoring.aspx.cs" Inherits="TutorBookings._Default" %>
+﻿<%@ Page Title="Book Tutoring" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeFile="BookTutoring.aspx.cs" Inherits="TutorBookings.BookTutoring" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -6,41 +6,41 @@
         <div class="Main">
             <!--Dynamic Content-->
             <fieldset>
-                <label for="tutors">Tutor:</label>
-                <select id="tutors" name="tutors" required>
-                    <option value="">Select</option>
-                    <option value="placeholder1">placeholder1</option>
-                    <option value="placeholder2">placeholder2</option>
-                </select>
+                <label for="tutors">Tutor:</label> <!--change labels to asp labels or html-->
 
-                <label for="course">Course:</label>
-                <select id="course" name="course" required>
-                    <option value="">Select</option>
-                    <option value="placeholder1">placeholder1</option>
-                    <option value="placeholder2">placeholder2</option>
-                </select>
+                <asp:DropDownList runat="server" ID="TutorDDL" OnSelectedIndexChanged="TutorSelected" AutoPostBack="true">
+                    <asp:ListItem Text="Select" Value="0"></asp:ListItem>
+                </asp:DropDownList>
+
+                <label for="course">Course:</label> 
+                 <asp:DropDownList runat="server" ID="CourseDDL" OnSelectedIndexChanged="CourseSelected" AutoPostBack="True" >
+                     <asp:ListItem Text="Select" Value="0"></asp:ListItem>
+                 </asp:DropDownList>
+
+                <br />
 
                 <label for="date">Date:</label>
-                <input type="date" id="date" name="date" required>
+                <asp:Calendar runat="server" ID="Date" OnSelectionChanged="DateSelected"></asp:Calendar>
 
                 <label for="time">Time:</label>
-                <select id="time" name="time" required>
-                    <option value="">Select</option>
-                    <option value="placeholder1">placeholder1</option>
-                    <option value="placeholder2">placeholder2</option>
-                </select>
+                 <asp:DropDownList runat="server" ID="TimeDDL" AutoPostBack="true">
+                     <asp:ListItem Text="Select" Value="0"></asp:ListItem>
+                     <asp:ListItem Text="placeholder1" Value="1"></asp:ListItem>
+                     <asp:ListItem Text="placeholder2" Value="2"></asp:ListItem>
+                 </asp:DropDownList>
             </fieldset>
 
             <fieldset>
                 <label for="Fname">First:</label>
-                <input type="text" id="Fname" placeholder="First Name" required/>
+                
+                <asp:TextBox runat="server" ID="FName" MaxLength="50" TextMode="SingleLine"></asp:TextBox>
                 <label for="Lname">Last:</label>
-                <input type="text" id="Lname" placeholder="Last Name" required/>
+                <asp:TextBox runat="server" ID="LName" MaxLength="50" TextMode="SingleLine"></asp:TextBox>
 
                 <label for="email">Email:</label>
-                <input type="email" id="email" placeholder="email@email.com" required/>
+                <asp:Textbox runat="server" ID="Email" MaxLength="50" TextMode="SingleLine"></asp:Textbox>
 
-                <input type="submit" value="Book!">
+                <asp:Button runat="server" ID="Submit" Text="Book" OnClick="SubmitButton" />
             </fieldset>
         </div>
     </main>
