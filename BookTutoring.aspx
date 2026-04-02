@@ -3,7 +3,7 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <main>
-        <div>
+        <div class="Main">
             <!--Dynamic Content-->
             <fieldset>
                 <label for="tutors">Tutor:</label>
@@ -32,8 +32,10 @@
             </fieldset>
 
             <fieldset>
-                <label for="name">Name:</label>
-                <input type="text" id="name" placeholder="First Last" required/>
+                <label for="Fname">First:</label>
+                <input type="text" id="Fname" placeholder="First Name" required/>
+                <label for="Lname">Last:</label>
+                <input type="text" id="Lname" placeholder="Last Name" required/>
 
                 <label for="email">Email:</label>
                 <input type="email" id="email" placeholder="email@email.com" required/>
