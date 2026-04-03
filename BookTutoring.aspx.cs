@@ -59,7 +59,8 @@ namespace TutorBookings
             CourseDDL.Items.Add(new ListItem("select", "0"));
             using (var db = DatabaseHelper.Connect()) { 
                 var sqlJoinTutorCourseCourse = $"SELECT tc.CourseCode, c.Name " +
-                                                $"FROM TutorCourse as tc INNER JOIN Course c ON tc.CourseCode = c.CourseCode " +
+                                                $"FROM TutorCourse as tc " +
+                                                $"INNER JOIN Course c ON tc.CourseCode = c.CourseCode " +
                                                 $"WHERE TutorId= '{TutorDDL.SelectedValue}'";
                 var TutorCourseCourseTutorCourse = db.Query<Course>(sqlJoinTutorCourseCourse).ToList();
 

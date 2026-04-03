@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using static TutorBookings.Database_SQL.Models;
 
 namespace TutorBookings.Database_SQL
 {
@@ -14,6 +15,8 @@ namespace TutorBookings.Database_SQL
             public string LastName { get; set; }
             public string Bio { get; set; }
             public string Picture { get; set; }
+            public List<Course> Courses { get; set; } = new List<Course>();
+
         }
 
         public class Course

@@ -22,15 +22,51 @@ namespace TutorBookings
             }
         }
 
+        //explain this block VV
+
         protected void LoadTutors()
         {
             using (var db = DatabaseHelper.Connect())
             {
-                var sql = "SELECT Picture, FirstName, LastName, Bio from Tutor";
-                var Tutor = db.Query<Tutor>(sql).ToList();
+                var sql = "SELECT t.TutorId, t.Picture, t.FirstName, t.LastName, t.Bio, tc.CourseCode, c.Name " +
+                                "FROM Tutor as t " +
+                                "INNER JOIN TutorCourse as tc ON t.TutorID = tc.TutorId " +
+                                "INNER JOIN Course as c ON c.CourseCode = tc.CourseCode " +
+                                "WHERE t.TutorId IS NOT NULL " +
+                                "ORDER BY t.LastName, FirstName";
 
-                Tutors.DataSource = Tutor;
+                var TutorList = new Dictionary<string, Models.Tutor>();
+                var Tutor = db.Query<Models.Tutor, Models.Course, Models.Tutor>(
+                    sql,
+                    (tutor, course) =>
+                    {
+                        if (!TutorList.TryGetValue(tutor.TutorId, out var currentTutor))
+                        {
+                            currentTutor = tutor;
+                            TutorList.Add(currentTutor.TutorId, currentTutor);
+                        }
+
+                        if (course != null)
+                            currentTutor.Courses.Add(course);
+
+                        return currentTutor;
+                    },
+                    splitOn: "CourseCode").ToList();
+
+                Tutors.DataSource = Tutors.DataSource = TutorList.Values.ToList();
+                ;
                 Tutors.DataBind();
+            }
+        }
+
+        protected void getTutorCourse(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                var Tutor = (Models.Tutor)e.Item.DataItem;
+                var coursesRepeater = (Repeater)e.Item.FindControl("Courses");
+                coursesRepeater.DataSource = Tutor.Courses;
+                coursesRepeater.DataBind();
             }
         }
     }

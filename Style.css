@@ -59,19 +59,19 @@ footer {
     width: 100%;
 }
 
-.MeetTutors {
+.EmployeeDisplay {
     display: flex;
-    align-items: flex-start; /* keeps text aligned to top */
-    gap: 15px; /* space between image and text */
+    align-items: flex-start; 
+    gap: 15px; 
     margin-bottom: 20px;
 }
 
-.TutorBio {
+.Bio {
     display: flex;
     flex-direction: column;
 }
 
-.TutorImg {
-    width: 500px;
+.Headshot {
+    width: 400px;
     object-fit: cover;
 }
