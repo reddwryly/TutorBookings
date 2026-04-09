@@ -35,27 +35,28 @@ namespace TutorBookings
                                 "WHERE t.TutorId IS NOT NULL " +
                                 "ORDER BY t.LastName, FirstName";
 
-                var TutorList = new Dictionary<string, Models.Tutor>();
-                var Tutor = db.Query<Models.Tutor, Models.Course, Models.Tutor>(
+                var TutorList = new Dictionary<string, Models.Tutor>(); //Saves Tutors objects with their dictionary of courses
+
+                //multi mapping
+                var Tutor = db.Query<Models.Tutor, Models.Course, Models.Tutor>( //<Maps Tutor fields, maps course fields, return type 
                     sql,
-                    (tutor, course) =>
+                    (tutor, course) => //for each row in the result
                     {
-                        if (!TutorList.TryGetValue(tutor.TutorId, out var currentTutor))
+                        if (!TutorList.TryGetValue(tutor.TutorId, out var currentTutor)) //checks if tutor is in the dictionary
                         {
                             currentTutor = tutor;
-                            TutorList.Add(currentTutor.TutorId, currentTutor);
+                            TutorList.Add(currentTutor.TutorId, currentTutor); //if not adds them 
                         }
 
-                        if (course != null)
-                            currentTutor.Courses.Add(course);
+                        if (course != null) //checks if tutor has courses
+                            currentTutor.Courses.Add(course); //adds the couse if they do 
 
                         return currentTutor;
                     },
-                    splitOn: "CourseCode").ToList();
+                    splitOn: "CourseCode").ToList(); //seperates the tutor field results from the course field results
 
-                Tutors.DataSource = Tutors.DataSource = TutorList.Values.ToList();
-                ;
-                Tutors.DataBind();
+                Tutors.DataSource = Tutors.DataSource = TutorList.Values.ToList(); //converts unique tutors into a list
+                Tutors.DataBind(); //gives the data to the asp:Repeater
             }
         }
 
@@ -63,10 +64,10 @@ namespace TutorBookings
         {
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
-                var Tutor = (Models.Tutor)e.Item.DataItem;
-                var coursesRepeater = (Repeater)e.Item.FindControl("Courses");
+                var Tutor = (Models.Tutor)e.Item.DataItem; //the current tutor is set to the data already loaded
+                var coursesRepeater = (Repeater)e.Item.FindControl("Courses"); //collects all the courses for the tutor
                 coursesRepeater.DataSource = Tutor.Courses;
-                coursesRepeater.DataBind();
+                coursesRepeater.DataBind(); //renders the courses to the course asp:Repeater
             }
         }
     }

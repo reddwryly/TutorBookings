@@ -115,7 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AboutTutoring.aspx" />
-    <Content Include="Database_SQL\TutorBookingsERD.png" />
+    <Content Include="Database_SQL\ERD.png" />
     <Content Include="IMG\Default.png" />
     <Content Include="IMG\StevesPhoto.png" />
     <Content Include="MeetOurTutors.aspx" />

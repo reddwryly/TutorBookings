@@ -20,10 +20,10 @@
                 <br />
 
                 <label for="date">Date:</label>
-                <asp:Calendar runat="server" ID="Date" OnSelectionChanged="DateSelected"></asp:Calendar>
+                <asp:Calendar runat="server" ID="Date" OnDayRender="LoadDates" OnSelectionChanged="DateSelected"></asp:Calendar>
 
                 <label for="time">Time:</label>
-                 <asp:DropDownList runat="server" ID="TimeDDL" AutoPostBack="true">
+                 <asp:DropDownList runat="server" ID="TimeDDL" AutoPostBack="true" Enabled="false">
                      <asp:ListItem Text="Select" Value="0"></asp:ListItem>
                      <asp:ListItem Text="placeholder1" Value="1"></asp:ListItem>
                      <asp:ListItem Text="placeholder2" Value="2"></asp:ListItem>
@@ -42,6 +42,8 @@
 
                 <asp:Button runat="server" ID="Submit" Text="Book" OnClick="SubmitButton" />
             </fieldset>
+            <br />
+            <br />
         </div>
     </main>
 

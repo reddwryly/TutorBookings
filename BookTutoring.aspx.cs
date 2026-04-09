@@ -1,16 +1,19 @@
-﻿using System;
+﻿using Dapper;
+using Microsoft.Ajax.Utilities;
+using System;
+using System.Activities.Statements;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.ComTypes;
+using System.Threading;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using TutorBookings.Database_SQL;
 using static TutorBookings.Database_SQL.Models;
-using Dapper;
-using System.Configuration;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using Microsoft.Ajax.Utilities;
 
 namespace TutorBookings
 {
@@ -20,22 +23,15 @@ namespace TutorBookings
         {
             if (!IsPostBack)
             {
-                LoadOptions();
+                LoadCourses();
+                LoadTutors();
             }
         }
 
-        protected void LoadOptions()
+        protected void LoadTutors()
         {
             using (var db = DatabaseHelper.Connect())
             {
-                var sqlCourses = "SELECT CourseCode, Name FROM Course";
-                var Course = db.Query<Course>(sqlCourses).ToList();
-
-                foreach(var c in Course)
-                {
-                    CourseDDL.Items.Add(new ListItem($"{c.CourseCode} - {c.Name}", c.CourseCode));
-                }
-
                 var sqlTutors = "SELECT FirstName, LastName, TutorID FROM Tutor";
                 var Tutor = db.Query<Tutor>(sqlTutors).ToList();
 
@@ -46,18 +42,92 @@ namespace TutorBookings
             }
         }
 
+        protected void LoadCourses()
+        {
+            using (var db = DatabaseHelper.Connect())
+            {
+                var sqlCourses = "SELECT CourseCode, Name FROM Course";
+                var Course = db.Query<Course>(sqlCourses).ToList();
+
+                foreach (var c in Course)
+                {
+                    CourseDDL.Items.Add(new ListItem($"{c.CourseCode} - {c.Name}", c.CourseCode));
+                }
+            }
+        }
+
+        protected void LoadDates(object sender, DayRenderEventArgs e)
+        {
+            using (var db = DatabaseHelper.Connect())
+            {
+                var sqlSemester = "SELECT StartDate, EndDate FROM Semester WHERE Active = 1";
+                var Semester = db.QuerySingle<Semester>(sqlSemester);
+
+                DateTime StartDate = DateTime.Parse(Semester.StartDate).Date;
+                DateTime EndDate = DateTime.Parse(Semester.EndDate).Date;
+
+                if (Semester != null && TutorDDL.SelectedValue == "0" && CourseDDL.SelectedValue == "0")
+                {
+                    if (e.Day.Date < DateTime.Today.AddDays(1) || e.Day.Date > DateTime.Today.AddDays(30) || StartDate > e.Day.Date || e.Day.Date > EndDate)
+                    {
+                        e.Day.IsSelectable = false;
+                        e.Cell.ForeColor = System.Drawing.Color.Gray;
+                    }
+                    return;
+                }
+
+                e.Day.IsSelectable = false;
+                e.Cell.ForeColor = System.Drawing.Color.Gray;
+
+                var TutorAvailabilityDays = ViewState["TutorAvailability"] as List<string>;
+                var DayOff = ViewState["TimeOff"] as List<string>;
+
+                //var TimeOff = ViewState["TimeOff"] as List<TimeOff>;
+
+                if (TutorAvailabilityDays != null && TutorDDL.SelectedValue != "0")
+                {
+                    string currentCalendarDay = e.Day.Date.DayOfWeek.ToString().ToLower();
+
+                    if (TutorAvailabilityDays.Contains(currentCalendarDay)) {
+                        e.Day.IsSelectable = true;
+                        e.Cell.ForeColor = System.Drawing.Color.Black;
+                    }
+                }
+
+                foreach (var d in DayOff)
+                {
+                    DateTime date = DateTime.Parse(d).Date;
+
+                    if (date == e.Day.Date) {
+                        e.Day.IsSelectable = false;
+                        e.Cell.ForeColor = System.Drawing.Color.Gray;
+                    }
+                }
+
+                if (Semester != null)
+                {
+                    if (e.Day.Date < DateTime.Today.AddDays(1) || e.Day.Date > DateTime.Today.AddDays(30) || StartDate > e.Day.Date || e.Day.Date > EndDate)
+                    {
+                        e.Day.IsSelectable = false;
+                        e.Cell.ForeColor = System.Drawing.Color.Gray;
+                    }
+                }
+            }
+        }
+
         protected void TutorSelected(object sender, EventArgs e)
         {
+            var currentCourse = CourseDDL.SelectedValue;
+            CourseDDL.Items.Clear();
+            CourseDDL.Items.Add(new ListItem("select", "0"));
 
             if (TutorDDL.SelectedValue == "0")
             {
-                //to let the user "change their mind"
-                //if the value still makes sence for the new selection set value to the old value before clear
+                LoadCourses();
             }
 
-            CourseDDL.Items.Clear();
-            CourseDDL.Items.Add(new ListItem("select", "0"));
-            using (var db = DatabaseHelper.Connect()) { 
+            using (var db = DatabaseHelper.Connect()) {
+
                 var sqlJoinTutorCourseCourse = $"SELECT tc.CourseCode, c.Name " +
                                                 $"FROM TutorCourse as tc " +
                                                 $"INNER JOIN Course c ON tc.CourseCode = c.CourseCode " +
@@ -69,101 +139,77 @@ namespace TutorBookings
                     CourseDDL.Items.Add(new ListItem($"{tc.CourseCode} - {tc.Name}", tc.CourseCode));
                 }
 
+                if (CourseDDL.Items.FindByValue(currentCourse) != null)
+                {
+                    CourseDDL.SelectedValue = currentCourse;
+                }
+
+                //date 
+                var sqlAvailability = $"SELECT Weekday FROM TutorAvailability WHERE TutorId = '{TutorDDL.SelectedValue}'";
+                var TutorAvailability = db.Query<TutorAvailability>(sqlAvailability).ToList();
+
+                var sqlApointment = $"SELECT Date FROM Appointment WHERE TutorId = '{TutorDDL.SelectedValue}'";
+                var Appointment = db.Query<Appointment>(sqlApointment).ToList();
+
+                var sqlTimeOff = $"SELECT Date FROM TimeOff WHERE TutorId = '{TutorDDL.SelectedValue}'";
+                var TimeOff = db.Query<TimeOff>(sqlTimeOff).ToList();
+
+                var TutorAvailabilityDays = TutorAvailability.Select(a => a.Weekday.ToLower()).ToList();
+                ViewState["TutorAvailability"] = TutorAvailabilityDays;
+
+                var DayOff = TimeOff.Select(a => a.Date).ToList();
+                ViewState["TimeOff"] = DayOff;
             }
-
-            //issues with duel dependent dropdowns still 
-            //also if the user empties courses i want all unlselected options to reload with all options (may need to seperate LoadOptionsO into different functions for each)
-
-            if (Date.SelectedDate == DateTime.MinValue)
-            {
-                //research how to choose dates that apear in the calandar control 
-            }
-
-            //WIP
-            //if (TimeDDL.SelectedValue == "0")
-            //{
-            //    TimeDDL.Items.Clear();
-            //    TimeDDL.Items.Add(new ListItem("select", "0"));
-            //    using (var db = DatabaseHelper.Connect())
-            //    {
-            //        var sqlTutorAvailability = $"SELECT StartTime, EndTime FROM TutorAvailability WHERE TutorId = '{TutorDDL.SelectedValue}'";
-            //        var TutorAvailability = db.Query<TutorAvailability>(sqlTutorAvailability).ToList();
-
-            //        foreach (var tc in TutorCourseCourseTutorCourse)
-            //        {
-            //            CourseDDL.Items.Add(new ListItem($"{tc.CourseCode} - {tc.Name}", tc.CourseCode));
-            //        }
-            //    }
-            //}
         }
 
         protected void CourseSelected(object sender, EventArgs e)
         {
- 
+            var currentTutor = TutorDDL.SelectedValue;
+            TutorDDL.Items.Clear();
+            TutorDDL.Items.Add(new ListItem("select", "0"));
 
-            if (TutorDDL.SelectedValue == "0")
+            if (CourseDDL.SelectedValue == "0")
             {
-                TutorDDL.Items.Clear();
-                TutorDDL.Items.Add(new ListItem("select", "0"));
-                using (var db = DatabaseHelper.Connect())
-                {
-                    var sqlJoinTutorCourseTutor = $"SELECT t.FirstName, t.LastName, tc.TutorId " +
-                                                   $"FROM TutorCourse as tc INNER JOIN Tutor as t ON tc.TutorID = t.TutorId " +
-                                                   $"WHERE CourseCode = '{CourseDDL.SelectedValue}'";
-                    var TutorCourseCourseTutorTutor = db.Query<Tutor>(sqlJoinTutorCourseTutor).ToList();
+               
+                LoadTutors();
+            }
 
-                    foreach (var t in TutorCourseCourseTutorTutor)
-                    {
-                        TutorDDL.Items.Add(new ListItem($"{t.FirstName} {t.LastName}", t.TutorId));
-                    }
+            using (var db = DatabaseHelper.Connect())
+            {
+                var sqlJoinTutorCourseTutor = $"SELECT t.FirstName, t.LastName, tc.TutorId " +
+                                               $"FROM TutorCourse as tc INNER JOIN Tutor as t ON tc.TutorID = t.TutorId " +
+                                               $"WHERE CourseCode = '{CourseDDL.SelectedValue}'";
+                var TutorCourseCourseTutorTutor = db.Query<Tutor>(sqlJoinTutorCourseTutor).ToList();
+
+                foreach (var t in TutorCourseCourseTutorTutor)
+                {
+                    TutorDDL.Items.Add(new ListItem($"{t.FirstName} {t.LastName}", t.TutorId));
+                }
+
+                if (TutorDDL.Items.FindByValue(currentTutor) != null)
+                {
+                    TutorDDL.SelectedValue = currentTutor;
                 }
             }
 
-            if (Date.SelectedDate == DateTime.MinValue)
-            {
-                
-            }
-
-            if (TimeDDL.SelectedValue == "0")
-            {
-
-            }
+            //date 
         }
 
         protected void DateSelected(object sender, EventArgs e)
         {
-            if (TutorDDL.SelectedValue == "0")
-            {
+            TimeDDL.Enabled = true;
 
-            }
+            //tutor 
 
-            if (CourseDDL.SelectedValue == "0")
-            {
+            //course
 
-            }
+            //time 
 
-            if (TimeDDL.SelectedValue == "0")
-            {
-                
-            }
         }
 
-        protected void TimeSelected()
+        protected void EnableTime()
         {
-            if (TutorDDL.SelectedValue == "0")
-            {
-
-            }
-
-            if (CourseDDL.SelectedValue == "0")
-            {
-
-            }
-
-            if (Date.SelectedDate == DateTime.MinValue)
-            {
-                
-            }
+           
         }
 
         protected void SubmitButton(object sender, EventArgs e)

@@ -31,6 +31,7 @@ namespace TutorBookings.Database_SQL
             public string CourseCode { get; set; }
         }
 
+        [Serializable]
         public class TutorAvailability
         {
             public string TutorId { get; set; }
@@ -46,6 +47,7 @@ namespace TutorBookings.Database_SQL
             public string LastName { get; set; }
         }
 
+        [Serializable]
         public class Appointment
         {
             public string TutorId { get; set; }
@@ -53,6 +55,23 @@ namespace TutorBookings.Database_SQL
             public string Time { get; set; }
             public string StudentEmail { get; set; }
             public string CourseCode { get; set; }
+        }
+
+        [Serializable]
+        public class TimeOff
+        {
+            public string TutorID { get; set; }
+            public string Date { get; set; }
+            public string Reason { get; set; }
+        }
+
+        public class Semester
+        {
+            public string ID { get; set; }
+            public string Name { get; set; }
+            public string StartDate { get; set; }
+            public string EndDate { get; set; }
+            public string Active { get; set; }
         }
     }
 }
