@@ -28,9 +28,7 @@
                      <asp:ListItem Text="placeholder1" Value="1"></asp:ListItem>
                      <asp:ListItem Text="placeholder2" Value="2"></asp:ListItem>
                  </asp:DropDownList>
-            </fieldset>
 
-            <fieldset>
                 <label for="Fname">First:</label>
                 
                 <asp:TextBox runat="server" ID="FName" MaxLength="50" TextMode="SingleLine"></asp:TextBox>
@@ -42,8 +40,6 @@
 
                 <asp:Button runat="server" ID="Submit" Text="Book" OnClick="SubmitButton" />
             </fieldset>
-            <br />
-            <br />
         </div>
     </main>
 

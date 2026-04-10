@@ -5,18 +5,18 @@
     overflow-x: hidden;
     font-family: Arial;
     font-size: 150%;
+    background-color: #dcaa89;
 }
 
 .Main {
-    padding-top: 200px;
     padding-left: 100px;
     padding-right: 100px;
-    padding-bottom: 50px;
 }
 
 h1 {
     display: inline;
     font-size: 70px;
+    color: #ffeae1;
 }
 
 nav {
@@ -24,29 +24,36 @@ nav {
     padding: 15px;
 }
 
-a {
-    background-color: cadetblue;
-    border-radius: 10px;
-    padding: 5px;
-    color: white;
+.nava {
+    padding: 20px;
+    padding-top: 100%;
+    padding-bottom: 42px;
+    color: #ffeae1;
     text-decoration: none;
 }
 
-    a:hover {
-        background-color: white;
-        color: cadetblue;
+    .nava:hover {
+        background-color: #4c848d;
     }
 
-    a.link {
-        display: block;
-        width: fit-content;
-        text-align: center;
-        margin: 0 auto;
+a.link {
+    display: block;
+    width: fit-content;
+    text-align: center;
+    margin: 0 auto;
+    color: white;
+    background-color: #4c848d;
+    text-decoration: none;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+    a.link:hover {
+        background-color: #30525c;
     }
 
 header {
-    position: fixed;
-    background-color: #EC5800;
+    background-color: #30525c;
     width: 100%;
     padding: 30px;
     top: 0;
@@ -54,9 +61,10 @@ header {
 }
 
 footer {
-    background-color: #EC5800;
+    background-color: #30525c;
     padding: 20px;
     width: 100%;
+    color: #ffeae1;
 }
 
 .EmployeeDisplay {
@@ -75,3 +83,12 @@ footer {
     width: 400px;
     object-fit: cover;
 }
+
+fieldset {
+    background-color: #ffeae1;
+    padding: 30px;
+}
+
+    fieldset + fieldset {
+        margin-top: 15px;
+    }

@@ -2,7 +2,8 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <main aria-labelledby="title">
-            <div class="Main">
+        <div class="Main">
+            <fieldset>
                 <h3>Why get turoing?</h3>
                 <p>Tutors can help with:</p>
                 <ul>
@@ -30,6 +31,7 @@
                 <p>Contact our Tutoring Coordinator or Head Tutor!</p>
                 <a class="link" href="Contact.aspx">Contact Us</a>
                 <br />
-            </div>
+            </fieldset>
+        </div>
     </main>
 </asp:Content>

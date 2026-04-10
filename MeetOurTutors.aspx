@@ -6,20 +6,22 @@
             <!--Dynamic Content-->
             <asp:Repeater ID="Tutors" runat="server" OnItemDataBound="getTutorCourse">
                 <ItemTemplate>
-                    <div class="EmployeeDisplay">
-                        <img src="/IMG/<%# Eval("Picture") %>" class="Headshot" />
-                        <div class="Bio">
-                            <h3><%# Eval("FirstName") %> <%# Eval("LastName") %></h3>
-                            <p><%# Eval("Bio") %></p>
-                            <ul>
-                                <asp:Repeater ID="Courses" runat="server">
-                                    <ItemTemplate>
-                                        <li><%# Eval("CourseCode") %> - <%# Eval("Name") %></li>
-                                    </ItemTemplate>
-                                </asp:Repeater>
-                            </ul>
+                    <fieldset>
+                        <div class="EmployeeDisplay">
+                            <img src="/IMG/<%# Eval("Picture") %>" class="Headshot" />
+                            <div class="Bio">
+                                <h3><%# Eval("FirstName") %> <%# Eval("LastName") %></h3>
+                                <p><%# Eval("Bio") %></p>
+                                <ul>
+                                    <asp:Repeater ID="Courses" runat="server">
+                                        <ItemTemplate>
+                                            <li><%# Eval("CourseCode") %> - <%# Eval("Name") %></li>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
+                    </fieldset>
                 </ItemTemplate>
             </asp:Repeater>
         </div>

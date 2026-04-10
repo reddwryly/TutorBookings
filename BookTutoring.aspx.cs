@@ -82,8 +82,6 @@ namespace TutorBookings
                 var TutorAvailabilityDays = ViewState["TutorAvailability"] as List<string>;
                 var DayOff = ViewState["TimeOff"] as List<string>;
 
-                //var TimeOff = ViewState["TimeOff"] as List<TimeOff>;
-
                 if (TutorAvailabilityDays != null && TutorDDL.SelectedValue != "0")
                 {
                     string currentCalendarDay = e.Day.Date.DayOfWeek.ToString().ToLower();

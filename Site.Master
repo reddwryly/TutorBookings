@@ -34,11 +34,11 @@
             <header>
                 <h1>TutorBook</h1> 
                 <nav>
-                    <a href="AboutTutoring.aspx">About Tutoring</a>
-                    <a href="MeetOurTutors.aspx">Meet Our Tutors</a>
-                    <a href="BecomeTutor.aspx">Become a Tutor</a>
-                    <a href="BookTutoring.aspx">Book Tutoring</a>
-                    <a href="Contact.aspx">Contact Us</a>
+                    <a href="AboutTutoring.aspx" class="nava">About Tutoring</a>
+                    <a href="MeetOurTutors.aspx" class="nava">Meet Our Tutors</a>
+                    <a href="BecomeTutor.aspx" class="nava">Become a Tutor</a>
+                    <a href="BookTutoring.aspx" class="nava">Book Tutoring</a>
+                    <a href="Contact.aspx" class="nava">Contact Us</a>
                 </nav>
             </header>
         <div class="container body-content">
