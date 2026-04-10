@@ -6,7 +6,7 @@ This personal project is a web application that connects tutors and students. It
 
 ## Technologies
 
-- HTML/CSS/JavaScript
+- HTML/CSS
 - SQLite 
 - C#/ASP.Net/Dapper
 
@@ -19,6 +19,6 @@ Currently Working On:
 > * Planning the recurring appointment logic and admin page
 
 > Completed:
-> * Baseline HTML/CSS
+> * HTML/CSS
 > * Database design/implementation
 > * Database Connection
