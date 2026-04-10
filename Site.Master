@@ -34,9 +34,11 @@
             <header>
                 <h1>TutorBook</h1> 
                 <nav>
-                    <a href="AboutTutoring.aspx">About Tutoring</a>
-                    <a href="MeetOurTutors.aspx">Meet Our Tutors</a>
-                    <a href="BookTutoring.aspx">Book Tutoring</a>
+                    <a href="AboutTutoring.aspx" class="nava">About Tutoring</a>
+                    <a href="MeetOurTutors.aspx" class="nava">Meet Our Tutors</a>
+                    <a href="BecomeTutor.aspx" class="nava">Become a Tutor</a>
+                    <a href="BookTutoring.aspx" class="nava">Book Tutoring</a>
+                    <a href="Contact.aspx" class="nava">Contact Us</a>
                 </nav>
             </header>
         <div class="container body-content">
@@ -44,7 +46,7 @@
             </asp:ContentPlaceHolder>
         </div>
         <footer>
-            contact: MTutor@email.com | 123-456-78910 | 123 Tutor street, Tutor Town, TW
+            Tutoring Center Adress: 123 Tutor street, Tutor Town, TW | Library Top Floor
         </footer>
     </form>
 </body>
