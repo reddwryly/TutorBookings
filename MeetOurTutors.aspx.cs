@@ -33,7 +33,7 @@ namespace TutorBookings
                                 "INNER JOIN TutorCourse as tc ON t.TutorID = tc.TutorId " +
                                 "INNER JOIN Course as c ON c.CourseCode = tc.CourseCode " +
                                 "WHERE t.TutorId IS NOT NULL " +
-                                "ORDER BY t.LastName, FirstName";
+                                "ORDER BY t.LastName, FirstName, tc.CourseCode";
 
                 var TutorList = new Dictionary<string, Models.Tutor>(); //Saves Tutors objects with their dictionary of courses
 

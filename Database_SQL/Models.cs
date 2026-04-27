@@ -16,6 +16,7 @@ namespace TutorBookings.Database_SQL
             public string Bio { get; set; }
             public string Picture { get; set; }
             public List<Course> Courses { get; set; } = new List<Course>();
+            public List<TutorAvailability> TutorAvailability { get; set; } = new List<TutorAvailability>();
 
         }
 

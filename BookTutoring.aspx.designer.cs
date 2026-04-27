@@ -15,6 +15,15 @@ namespace TutorBookings
     {
 
         /// <summary>
+        /// Date control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Calendar Date;
+
+        /// <summary>
         /// TutorDDL control.
         /// </summary>
         /// <remarks>
@@ -31,15 +40,6 @@ namespace TutorBookings
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList CourseDDL;
-
-        /// <summary>
-        /// Date control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Calendar Date;
 
         /// <summary>
         /// TimeDDL control.
@@ -85,5 +85,14 @@ namespace TutorBookings
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Submit;
+
+        /// <summary>
+        /// confirmed control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label confirmed;
     }
 }

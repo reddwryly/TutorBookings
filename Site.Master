@@ -39,6 +39,7 @@
                     <a href="BecomeTutor.aspx" class="nava">Become a Tutor</a>
                     <a href="BookTutoring.aspx" class="nava">Book Tutoring</a>
                     <a href="Contact.aspx" class="nava">Contact Us</a>
+                    <a href="Resume.aspx" class="nava">Resume</a>
                 </nav>
             </header>
         <div class="container body-content">
@@ -46,7 +47,7 @@
             </asp:ContentPlaceHolder>
         </div>
         <footer>
-            Tutoring Center Adress: 123 Tutor street, Tutor Town, TW | Library Top Floor
+            Tutoring Center Address: 123 Tutor Street, Tutor Town, TW | Library Top Floor
         </footer>
     </form>
 </body>
