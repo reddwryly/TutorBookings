@@ -444,6 +444,20 @@ namespace TutorBookings
             }
         }
 
+        protected void RepeatingAppointmentPlus(object sender, EventArgs e)
+        {
+            MultiView1.ActiveViewIndex += 1;
+        }
+        protected void RepeatingAppointmentMinus(object sender, EventArgs e)
+        {
+            MultiView1.ActiveViewIndex -= 1;
+        }
+
+        protected void Check_Clicked(object sender, EventArgs e)
+        {
+
+        }
+
         protected void cvDate_Validation(object source, ServerValidateEventArgs args)
         {
             if (Date.SelectedDate == DateTime.MinValue)
@@ -505,7 +519,6 @@ namespace TutorBookings
                 var date = Date.SelectedDate.ToString("yyyy-MM-dd");
                 var tutor = TutorDDL.SelectedValue;
                 var course = CourseDDL.SelectedValue;
-                confirmed.Text = $"Tutoring with {TutorDDL.SelectedItem} for {CourseDDL.SelectedItem} on {date} at {TimeDDL.SelectedItem} is Scheduled!";
 
                 try
                 {
@@ -524,12 +537,12 @@ namespace TutorBookings
                             Console.WriteLine($"{rowsAffected} row(s) inserted.");
                         }
                     }
+                    confirmed.Text = $"Tutoring with {TutorDDL.SelectedItem} for {CourseDDL.SelectedItem} on {date} at {TimeDDL.SelectedItem} is Scheduled!"; //after selection error once it doesnt do this when non selection error
                 }
                 catch
                 {
                     confirmed.Text = "Selection Error";
                 }
-
 
                 Email.Text = "";
                 FName.Text = "";
@@ -539,6 +552,11 @@ namespace TutorBookings
                 TutorDDL.SelectedValue = "0";
                 CourseDDL.SelectedValue = "0";
             }
+        }
+
+        protected void SubmitButton2(object sender, EventArgs e)
+        {
+            MultiView1.ActiveViewIndex = 3;
         }
     }
 }

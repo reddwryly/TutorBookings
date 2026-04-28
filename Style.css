@@ -68,6 +68,7 @@ footer {
     padding: 20px;
     width: 100%;
     color: #ffeae1;
+    margin: 0px;
 }
 
 .EmployeeDisplay {
@@ -133,6 +134,7 @@ h4 {
 .cal {
     background-color: white;
     text-align: center;
+    width: 410px;
 }
 
     .cal a {
@@ -147,3 +149,15 @@ h4 {
     .cal td {
         padding: 5px;
     }
+
+.center {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+.check input[type="checkbox"] {
+    transform: scale(1.7);
+    margin: 8px;
+    align-items: center;
+}
