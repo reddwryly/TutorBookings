@@ -24,7 +24,7 @@ namespace TutorBookings
 
         private void LoadCourses() {
             using (var db = DatabaseHelper.Connect()) { //uses the connection from the DatabaseHelper file in the Database_SQL folder
-                var sql = "SELECT CourseCode, Name FROM Course"; //SQLite Query 
+                var sql = "SELECT CourseCode, Name FROM Course ORDER BY CourseCode"; //SQLite Query 
                 var Course = db.Query<Course>(sql).ToList(); //Results of Query
 
                 CoursesList.DataSource = Course; //CourseList is the ID for my ASP.NET server control in the html this sets the data

@@ -110,7 +110,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AboutTutoring.aspx" />
-    <Content Include="Database_SQL\TutorBookingsERD.png" />
+    <Content Include="Database_SQL\ERD.png" />
+    <Content Include="IMG\Default.png" />
+    <Content Include="IMG\JaneDoe.jpg" />
+    <Content Include="IMG\JohnDoe.jpg" />
+    <Content Include="IMG\SallySue.jpg" />
+    <Content Include="IMG\SteveJones.jpg" />
     <Content Include="IMG\StevesPhoto.png" />
     <Content Include="MeetOurTutors.aspx" />
     <Content Include="BookTutoring.aspx" />
@@ -128,6 +133,10 @@
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="App_Data\TutorDatabase" />
+    <Content Include="Contact.aspx" />
+    <Content Include="BecomeTutor.aspx" />
+    <Content Include="Resume.aspx" />
+    <Content Include="Resumefile.pdf" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -156,6 +165,7 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
+    <Content Include="Style.css" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -218,6 +228,27 @@
     </Compile>
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Contact.aspx.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Contact.aspx.designer.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BecomeTutor.aspx.cs">
+      <DependentUpon>BecomeTutor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BecomeTutor.aspx.designer.cs">
+      <DependentUpon>BecomeTutor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Resume.aspx.cs">
+      <DependentUpon>Resume.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Resume.aspx.designer.cs">
+      <DependentUpon>Resume.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup />
