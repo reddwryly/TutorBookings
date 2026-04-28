@@ -6,6 +6,7 @@
     font-family: Arial;
     font-size: 150%;
     background-color: #dcaa89;
+    width: 100%;
 }
 
 .Main {
@@ -20,14 +21,16 @@ h1 {
 }
 
 nav {
-    display: inline;
+    display: inline-block;
     padding: 15px;
+    margin-right: 20px;
+    margin-left: auto;
 }
 
 .nava {
     padding: 20px;
     padding-top: 100%;
-    padding-bottom: 42px;
+    padding-bottom: 45.5px;
     color: #ffeae1;
     text-decoration: none;
 }
@@ -41,7 +44,7 @@ a.link {
     width: fit-content;
     text-align: center;
     margin: 0 auto;
-    color: white;
+    color: #ffeae1;
     background-color: #4c848d;
     text-decoration: none;
     border-radius: 10px;
@@ -65,6 +68,7 @@ footer {
     padding: 20px;
     width: 100%;
     color: #ffeae1;
+    margin: 0px;
 }
 
 .EmployeeDisplay {
@@ -87,8 +91,73 @@ footer {
 fieldset {
     background-color: #ffeae1;
     padding: 30px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
     fieldset + fieldset {
         margin-top: 15px;
     }
+
+.bookformfeildset {
+    padding-top: 20px;
+    padding-bottom: 30px; 
+}
+
+td {
+    padding-left: 15px;
+    font-size: 30px;
+}
+
+.td2 {
+    padding-top: 20px;
+}
+
+.bookform {
+    margin: 40px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h4 {
+    text-align:center;
+}
+
+@media (max-width: 1550px) { 
+
+    .nava {
+        padding: 10px;
+        padding-bottom: 46px;
+    }
+}
+
+.cal {
+    background-color: white;
+    text-align: center;
+    width: 410px;
+}
+
+    .cal a {
+        text-decoration: none; 
+    }
+
+    .cal .title {
+        text-align: center;
+        width: 100%;
+    }
+
+    .cal td {
+        padding: 5px;
+    }
+
+.center {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+.check input[type="checkbox"] {
+    transform: scale(1.7);
+    margin: 8px;
+    align-items: center;
+}

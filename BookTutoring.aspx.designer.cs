@@ -15,22 +15,22 @@ namespace TutorBookings
     {
 
         /// <summary>
-        /// TutorDDL control.
+        /// MultiView1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList TutorDDL;
+        protected global::System.Web.UI.WebControls.MultiView MultiView1;
 
         /// <summary>
-        /// CourseDDL control.
+        /// View1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList CourseDDL;
+        protected global::System.Web.UI.WebControls.View View1;
 
         /// <summary>
         /// Date control.
@@ -42,6 +42,51 @@ namespace TutorBookings
         protected global::System.Web.UI.WebControls.Calendar Date;
 
         /// <summary>
+        /// cvDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cvDate;
+
+        /// <summary>
+        /// TutorDDL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList TutorDDL;
+
+        /// <summary>
+        /// cvTutor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cvTutor;
+
+        /// <summary>
+        /// CourseDDL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList CourseDDL;
+
+        /// <summary>
+        /// cvCourse control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cvCourse;
+
+        /// <summary>
         /// TimeDDL control.
         /// </summary>
         /// <remarks>
@@ -49,6 +94,15 @@ namespace TutorBookings
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList TimeDDL;
+
+        /// <summary>
+        /// cvTime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cvTime;
 
         /// <summary>
         /// FName control.
@@ -60,6 +114,15 @@ namespace TutorBookings
         protected global::System.Web.UI.WebControls.TextBox FName;
 
         /// <summary>
+        /// rfvFName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvFName;
+
+        /// <summary>
         /// LName control.
         /// </summary>
         /// <remarks>
@@ -67,6 +130,15 @@ namespace TutorBookings
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox LName;
+
+        /// <summary>
+        /// rfvLName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvLName;
 
         /// <summary>
         /// Email control.
@@ -78,6 +150,24 @@ namespace TutorBookings
         protected global::System.Web.UI.WebControls.TextBox Email;
 
         /// <summary>
+        /// rfvEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvEmail;
+
+        /// <summary>
+        /// Repeating control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Repeating;
+
+        /// <summary>
         /// Submit control.
         /// </summary>
         /// <remarks>
@@ -85,5 +175,14 @@ namespace TutorBookings
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Submit;
+
+        /// <summary>
+        /// confirmed control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label confirmed;
     }
 }

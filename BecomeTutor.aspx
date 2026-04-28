@@ -11,14 +11,13 @@
                         <li>Completed at least one semester at our institution</li>
                         <li>Have a cumulative GPA or 3.0+</li>
                         <li>Completed the course(s) you wish to tutor with an A or B </li>
-                        <li>Have a letter of recomendation from a professor</li>
+                        <li>Have a letter of recommendation from a professor</li>
                         <li>No record of academic dishonesty</li>
                     </ul>
               
-                    <p>To apply please send your resume and letter of recomendation from a professor to our tutoring coordinator! If you think you are good fit or have more questions about the role please reach out!</p>
+                    <p>To apply, please send your resume and a letter of recommendation from a professor to our tutoring coordinator! If you think you are a good fit or have more questions about the role, please reach out!</p>
                     <br />
                     <a class="link" href="Contact.aspx">Contact Tutoring Coordinator</a>
-                    <br />
                     <br />
                 </fieldset>
             </div>

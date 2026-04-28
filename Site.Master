@@ -46,7 +46,7 @@
             </asp:ContentPlaceHolder>
         </div>
         <footer>
-            Tutoring Center Adress: 123 Tutor street, Tutor Town, TW | Library Top Floor
+            Tutoring Center Address: 123 Tutor Street, Tutor Town, TW | Library Top Floor
         </footer>
     </form>
 </body>
