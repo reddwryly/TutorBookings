@@ -37,7 +37,7 @@
                     <a href="AboutTutoring.aspx" class="nava">About Tutoring</a>
                     <a href="MeetOurTutors.aspx" class="nava">Meet Our Tutors</a>
                     <a href="BecomeTutor.aspx" class="nava">Become a Tutor</a>
-                    <a href="BookTutoring.aspx" class="nava">Book Tutoring</a>
+                    <a href="BookTutoring.aspx" class="nava"><b>Book Tutoring</b></a>
                     <a href="Contact.aspx" class="nava">Contact Us</a>
                 </nav>
             </header>

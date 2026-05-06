@@ -124,14 +124,13 @@
                     <asp:View ID="View2" runat="server">
                         <h3 style="text-align:center">Repeat Appointment Until:</h3>
                         <div class="center">
-                            <asp:Calendar runat="server" ID="Calendar1" OnDayRender="LoadDates" OnSelectionChanged="DateSelected" autopostback="true" CssClass="cal"></asp:Calendar>
+                            <asp:Calendar runat="server" ID="Calendar1" OnDayRender="LoadDatesView2" autopostback="true" CssClass="cal" OnSelectionChanged="DateSelectedtoview2"></asp:Calendar>
                         </div> 
                         <div class="center">
                             <asp:CheckBox id="checkbox1" runat="server" CssClass="check"
                                 AutoPostBack="True"
-                                Text="Reassign tutor when selected tutor is unavailable"
-                                TextAlign="Right"
-                                OnCheckedChanged="Check_Clicked"/>
+                                Text="Reassign tutor for appointments that selected tutor is unavailable"
+                                TextAlign="Right"/>
                         </div>
                         <table style="margin-left:auto; margin-right:auto;">
                             <tr>
@@ -140,7 +139,7 @@
                                     <asp:Button runat="server" ID="Button1" Text="Back" OnClick="RepeatingAppointmentMinus" />
                                 </td>
                                 <td>
-                                    <asp:Button runat="server" ID="Button2" Text="Continue" OnClick="RepeatingAppointmentPlus" />
+                                    <asp:Button runat="server" ID="Button2" Text="Continue" enabled="false" OnClick="RepeatingAppointmentPlus" />
                                 </td>
                             </tr>
                         </table>
@@ -148,8 +147,8 @@
                     <asp:View runat="server" ID="View3">
                         <h3 style="text-align:center">Review and Remove Undesired Dates:</h3>
                         <div class="center">
-                            <asp:Calendar runat="server" ID="Calendar2" OnDayRender="LoadDates" OnSelectionChanged="DateSelected" autopostback="true" CssClass="cal"></asp:Calendar>
-                             <asp:Button runat="server" ID="Button5" Text="Remove" />
+                            <asp:Calendar runat="server" ID="Calendar2" OnDayRender="LoadDatesView2" OnSelectionChanged="DateSelectedtoRemove" autopostback="true" CssClass="cal"></asp:Calendar>
+                             <asp:Button runat="server" ID="RemoveButton" Enabled="false" Text="Remove" OnClick="Remove" />
                         </div>
                         <table style="margin-left:auto; margin-right:auto;">
                             <tr>
@@ -164,7 +163,17 @@
                         </table>
                     </asp:View>
                     <asp:View runat="server" ID="View4">
-                        <p>view4 upcomming appointments for student</p>
+                        <table>
+                            <tr>
+                                <td>
+                                    <asp:Button runat="server" ID="Button6" Text="Back to Book Tutoring" OnClick="BackToBooking" />
+                                </td>
+                                <td>
+                                    <h4><asp:Label runat="server" ID="Label1" cssclass="label"></asp:Label></h4>
+                                </td>
+                            </tr>
+                        </table>
+                        <!--some sort of loop to show all the appointment records for the specific student-->
                     </asp:View>
                 </asp:MultiView>
                 </div>
