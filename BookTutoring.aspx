@@ -173,7 +173,13 @@
                                 </td>
                             </tr>
                         </table>
-                        <!--some sort of loop to show all the appointment records for the specific student-->
+                        <ul>
+                            <asp:Repeater ID="AppointmentList" runat="server">
+                                <ItemTemplate>
+                                    <li><%# Eval("Date") %> at <%# Eval("Time") %> for <%# Eval("CourseCode") %> - <%# Eval("CourseName") %> with <%# Eval("FirstName") %> </li>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </ul>
                     </asp:View>
                 </asp:MultiView>
                 </div>

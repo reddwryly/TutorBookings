@@ -2,7 +2,10 @@
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
+	<PropertyGroup>
+		<LangVersion>latest</LangVersion>
+	</PropertyGroup>
+	<PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>
@@ -140,7 +143,6 @@
     <Content Include="App_Data\TutorDatabase" />
     <Content Include="Contact.aspx" />
     <Content Include="BecomeTutor.aspx" />
-    <Content Include="Resume.aspx" />
     <Content Include="Resumefile.pdf" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
@@ -241,15 +243,10 @@
     <Compile Include="BecomeTutor.aspx.designer.cs">
       <DependentUpon>BecomeTutor.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Resume.aspx.cs">
-      <DependentUpon>Resume.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Resume.aspx.designer.cs">
-      <DependentUpon>Resume.aspx</DependentUpon>
-    </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="bin\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.7.0.slim.min.map" />

@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using TutorBookings.Database_SQL;
@@ -22,7 +21,6 @@ namespace TutorBookings
                 LoadTutors();
             }
         }
-
         protected void LoadTutors()
         {
             using (var db = DatabaseHelper.Connect())
@@ -312,6 +310,17 @@ namespace TutorBookings
 
                 var DayOff = TimeOff.Select(a => a.Date).ToList();
                 ViewState["TimeOff"] = DayOff;
+
+                if (Date.SelectedDate != DateTime.MinValue)
+                {
+                    bool hasTimeOff = DayOff.Any(d =>
+                        DateTime.Parse(d).Date == Date.SelectedDate.Date);
+
+                    if (hasTimeOff)
+                    {
+                        Date.SelectedDate = DateTime.MinValue;
+                    }
+                }
 
                 //time
                 LoadTimes();
@@ -714,34 +723,122 @@ namespace TutorBookings
                 TutorDDL.SelectedValue = "0";
                 CourseDDL.SelectedValue = "0";
                 TimeDDL.EnableViewState = false;
+                TutorDDL.Items.Clear();
+                TutorDDL.Items.Add(new ListItem("Select", "0"));
+                LoadTutors();
+                CourseDDL.Items.Clear();
+                CourseDDL.Items.Add(new ListItem("Select", "0"));
+                LoadCourses();
             }
+        }
+
+        private List<DateTime> GetAvailableDates()
+        {
+            List<DateTime> availableDates = new List<DateTime>();
+            availableDates.Add(Date.SelectedDate);
+
+            using (var db = DatabaseHelper.Connect())
+            {
+                var sqlSemester = "SELECT StartDate, EndDate FROM Semester WHERE Active = 1";
+                var Semester = db.QuerySingle<Semester>(sqlSemester);
+
+                DateTime StartDate = DateTime.Parse(Semester.StartDate).Date;
+                DateTime EndDate = DateTime.Parse(Semester.EndDate).Date;
+
+                var sqlA = $"SELECT Date FROM Appointment WHERE TutorId = '{TutorDDL.SelectedValue}' AND Time = '{TimeDDL.SelectedValue}'";
+                var Appointment = db.Query<Appointment>(sqlA).ToList();
+
+                var sqlTO = $"SELECT Date FROM TimeOff WHERE TutorId = '{TutorDDL.SelectedValue}'";
+                var TimeOff = db.Query<TimeOff>(sqlTO).ToList();
+
+                var sqlAll = $""; 
+                var TutorsAll = db.Query<Appointment>(sqlTO).ToList();
+
+                List<DateTime> disabledDates = ViewState["DisabledDates"] as List<DateTime> ?? new List<DateTime>();
+
+                DayOfWeek targetDay = Date.SelectedDate.DayOfWeek;
+
+                View View2 = (View)MultiView1.FindControl("View2");
+                CheckBox checkbox = (CheckBox)View2.FindControl("checkbox1");
+                bool isBlocked = true;
+
+                for (DateTime d = Date.SelectedDate.AddDays(1); d <= EndDate; d = d.AddDays(1))
+                {
+                    if (d <= DateTime.Today.AddDays(30) && d.DayOfWeek == targetDay)
+                    {
+                        if (!checkbox.Checked) {
+                            isBlocked = Appointment.Any(a => DateTime.Parse(a.Date).Date == d) ||
+                                             TimeOff.Any(t => DateTime.Parse(t.Date).Date == d) ||
+                                             disabledDates.Contains(d);
+                        } else 
+                        {
+                            //all available dates for all tutors that tutor that course
+                        }
+
+                        if (!isBlocked)
+                        {
+                            availableDates.Add(d);
+                        }
+                    }
+                }
+            }
+            return availableDates;
         }
 
         protected void SubmitButton2(object sender, EventArgs e)
         {
-            //insert all apointments ** do this before dynamic message
 
-            //dynamic messge showing a studedents all upcoming appointments from StudentEmail 
+            //needs to check if the checkbox is checked and then add tutors accordingly 
+            List<DateTime> datesToBook = GetAvailableDates();
+
             using (var db = DatabaseHelper.Connect())
             {
-                var sql = $"SELECT t.FirstName AS FirstName, a.Date AS Date, a.Time AS Time, c.Name AS Name FROM Appointment a " +
-                            "INNER JOIN Tutor t ON a.TutorId = t.TutorId " +
-                            "INNER JOIN Course c ON c.CourseCode = a.CourseCode " +
-                            "WHERE StudentEmail = @StudentEmail";
-            }
-
-            View View3 = (View)MultiView1.FindControl("View3");
-
-            if (View3 != null)
-            {
-                System.Web.UI.WebControls.Label confirmed = (System.Web.UI.WebControls.Label)View3.FindControl("Label1");
-                if (confirmed != null)
+                foreach (DateTime apptDate in datesToBook)
                 {
-                    var student = $"{Email.Text}";
-                    confirmed.Text = $"Upcomming appointments for {student}:";
+                    var sql = "INSERT INTO Appointment (TutorID, Date, Time, StudentEmail, CourseCode) VALUES (@TutorID, @Date, @Time, @StudentEmail, @CourseCode)";
+                    var insert = new
+                    {
+                        TutorID = $"{TutorDDL.SelectedValue}",
+                        Date = apptDate.ToString("yyyy-MM-dd"),
+                        Time = $"{TimeDDL.SelectedValue}",
+                        StudentEmail = $"{Email.Text}",
+                        CourseCode = $"{CourseDDL.SelectedValue}"
+                    };
+                    db.Execute(sql, insert);
                 }
+
+                if (!db.ExecuteScalar<bool>("SELECT count(1) FROM Student where StudentEmail = @StudentEmail", new { StudentEmail = Email.Text }))
+                {
+                    var sql2 = "INSERT INTO Student (StudentEmail, FirstName, LastName) VALUES (@StudentEmail, @FirstName, @LastName)";
+                    var insertStudent = new { StudentEmail = $"{Email.Text}", FirstName = $"{FName.Text}", LastName = $"{LName.Text}" };
+                    db.Execute(sql2, insertStudent);
+                }
+
+                var sqlStudent = "SELECT FirstName, LastName FROM Student WHERE StudentEmail = @StudentEmail";
+                var students = db.QuerySingle<Student>(sqlStudent, new { StudentEmail = Email.Text });
+
+                var sqlAppointment = "SELECT * " +
+                                      "FROM AppointmentView " +
+                                      "WHERE StudentEmail = @StudentEmail";
+                var appointments = db.Query<AppointmentView>(sqlAppointment, new { StudentEmail = Email.Text });
+
+                View View3 = (View)MultiView1.FindControl("View3");
+                Repeater AppointmentList = (Repeater)View3.FindControl("AppointmentList");
+
+                if (View3 != null)
+                {
+                    System.Web.UI.WebControls.Label confirmed = (System.Web.UI.WebControls.Label)View3.FindControl("Label1");
+                    if (confirmed != null)
+                    {
+                        confirmed.Text = $"Upcomming appointments for {students.FirstName} {students.LastName}:";
+                    }
+                }
+
+                AppointmentList.DataSource = appointments;
+                AppointmentList.DataBind();
+
+                MultiView1.ActiveViewIndex = 3;
             }
-            MultiView1.ActiveViewIndex = 3;
         }
 
         protected void BackToBooking(object sender, EventArgs e)
@@ -755,6 +852,12 @@ namespace TutorBookings
             CourseDDL.SelectedValue = "0";
             TimeDDL.EnableViewState = false;
             MultiView1.ActiveViewIndex = 0;
+            TutorDDL.Items.Clear();
+            TutorDDL.Items.Add(new ListItem("Select", "0"));
+            LoadTutors();
+            CourseDDL.Items.Clear();
+            CourseDDL.Items.Add(new ListItem("Select", "0"));
+            LoadCourses();
         }
     }
 }
