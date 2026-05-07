@@ -1,20 +1,10 @@
 ﻿using Dapper;
-using Microsoft.Ajax.Utilities;
 using System;
-using System.Activities.Statements;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.ComTypes;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
-using System.Threading;
-using System.Timers;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Xml.Linq;
 using TutorBookings.Database_SQL;
 using static TutorBookings.Database_SQL.Models;
 
@@ -31,7 +21,6 @@ namespace TutorBookings
                 LoadTutors();
             }
         }
-
         protected void LoadTutors()
         {
             using (var db = DatabaseHelper.Connect())
@@ -80,7 +69,8 @@ namespace TutorBookings
                     return;
                 }
 
-                if (TutorDDL.SelectedValue != "0") {
+                if (TutorDDL.SelectedValue != "0")
+                {
                     e.Day.IsSelectable = false;
                     e.Cell.ForeColor = System.Drawing.Color.Gray;
 
@@ -91,7 +81,8 @@ namespace TutorBookings
                     {
                         string currentCalendarDay = e.Day.Date.DayOfWeek.ToString().ToLower();
 
-                        if (TutorAvailabilityDays.Contains(currentCalendarDay)) {
+                        if (TutorAvailabilityDays.Contains(currentCalendarDay))
+                        {
                             e.Day.IsSelectable = true;
                             e.Cell.ForeColor = System.Drawing.Color.Black;
                         }
@@ -110,7 +101,8 @@ namespace TutorBookings
                             }
                         }
                     }
-                } else if (CourseDDL.SelectedValue != "0")
+                }
+                else if (CourseDDL.SelectedValue != "0")
                 {
                     e.Day.IsSelectable = false;
                     e.Cell.ForeColor = System.Drawing.Color.Gray;
@@ -128,7 +120,7 @@ namespace TutorBookings
                         }
                     }
                 }
-                 
+
                 if (Semester != null)
                 {
                     if (e.Day.Date < DateTime.Today.AddDays(1) || e.Day.Date > DateTime.Today.AddDays(30) || StartDate > e.Day.Date || e.Day.Date > EndDate)
@@ -156,7 +148,8 @@ namespace TutorBookings
                                             $"WHERE date = '{Date.SelectedDate.ToString("yyyy-MM-dd")}' AND TutorId = '{TutorDDL.SelectedValue}'";
                 var AppointmentTimes = db.Query<Appointment>(sqlAppointmentTimes).ToList();
 
-                if (CourseDDL.SelectedValue == "0" && TutorDDL.SelectedValue == "0") { //load all times for day
+                if (CourseDDL.SelectedValue == "0" && TutorDDL.SelectedValue == "0")
+                { //load all times for day
 
                     var sqltutortime = $"SELECT DISTINCT StartTime, EndTime " +
                                             $"FROM TutorAvailability " +
@@ -180,7 +173,8 @@ namespace TutorBookings
                             sTime = sTime.AddHours(1);
                         }
                     }
-                } else if (CourseDDL.SelectedValue == "0") //load based on tutor
+                }
+                else if (CourseDDL.SelectedValue == "0") //load based on tutor
                 {
 
                     var sqltutortime = $"SELECT DISTINCT StartTime, EndTime " +
@@ -206,7 +200,8 @@ namespace TutorBookings
                         }
                     }
 
-                } else if (TutorDDL.SelectedValue == "0") //load based on course
+                }
+                else if (TutorDDL.SelectedValue == "0") //load based on course
                 {
                     var sqltutortime = $"SELECT DISTINCT ta.StartTime, ta.EndTime " +
                                                 $"FROM TutorAvailability ta INNER JOIN Course c ON c.CourseCode = tc.CourseCode " +
@@ -231,7 +226,8 @@ namespace TutorBookings
                             sTime = sTime.AddHours(1);
                         }
                     }
-                } else 
+                }
+                else
                 {
                     var sqltutortime = $"SELECT DISTINCT ta.StartTime, ta.EndTime " +
                                                 $"FROM TutorAvailability ta INNER JOIN Course c ON c.CourseCode = tc.CourseCode " +
@@ -282,7 +278,8 @@ namespace TutorBookings
                 LoadCourses();
             }
 
-            using (var db = DatabaseHelper.Connect()) {
+            using (var db = DatabaseHelper.Connect())
+            {
 
                 //course
                 var sqlJoinTutorCourseCourse = $"SELECT tc.CourseCode, c.Name " +
@@ -313,6 +310,17 @@ namespace TutorBookings
 
                 var DayOff = TimeOff.Select(a => a.Date).ToList();
                 ViewState["TimeOff"] = DayOff;
+
+                if (Date.SelectedDate != DateTime.MinValue)
+                {
+                    bool hasTimeOff = DayOff.Any(d =>
+                        DateTime.Parse(d).Date == Date.SelectedDate.Date);
+
+                    if (hasTimeOff)
+                    {
+                        Date.SelectedDate = DateTime.MinValue;
+                    }
+                }
 
                 //time
                 LoadTimes();
@@ -363,7 +371,7 @@ namespace TutorBookings
             }
         }
 
-        protected void DateSelected(object sender, EventArgs e) 
+        protected void DateSelected(object sender, EventArgs e)
         {
             TimeDDL.Enabled = true;
 
@@ -374,7 +382,8 @@ namespace TutorBookings
                 TutorDDL.Items.Clear();
                 TutorDDL.Items.Add(new ListItem("select", "0"));
 
-                if (CourseDDL.SelectedValue == "0") {
+                if (CourseDDL.SelectedValue == "0")
+                {
                     var sqlAvailability = $"SELECT ta.TutorId, t.FirstName, t.LastName " +
                                            $"FROM TutorAvailability ta INNER JOIN Tutor t ON ta.TutorId = t.TutorId " +
                                            $"WHERE Weekday = '{Date.SelectedDate.DayOfWeek.ToString().ToLower()}'";
@@ -384,7 +393,8 @@ namespace TutorBookings
                     {
                         TutorDDL.Items.Add(new ListItem($"{t.FirstName} {t.LastName}", t.TutorId));
                     }
-                } else
+                }
+                else
                 {
                     var sqlAvailability = $"SELECT ta.TutorId, t.FirstName, t.LastName " +
                                            $"FROM TutorAvailability ta INNER JOIN Tutor t ON ta.TutorId = t.TutorId " +
@@ -420,7 +430,8 @@ namespace TutorBookings
                     {
                         CourseDDL.Items.Add(new ListItem($"{c.CourseCode} - {c.Name}", c.CourseCode));
                     }
-                } else
+                }
+                else
                 {
                     var sqlCourseAvailability = $"SELECT DISTINCT c.CourseCode, c.Name " +
                                                 $"FROM Course c INNER JOIN TutorCourse tc ON c.CourseCode = tc.CourseCode " +
@@ -451,11 +462,6 @@ namespace TutorBookings
         protected void RepeatingAppointmentMinus(object sender, EventArgs e)
         {
             MultiView1.ActiveViewIndex -= 1;
-        }
-
-        protected void Check_Clicked(object sender, EventArgs e)
-        {
-
         }
 
         protected void cvDate_Validation(object source, ServerValidateEventArgs args)
@@ -507,6 +513,165 @@ namespace TutorBookings
             }
         }
 
+        protected void LoadDatesView2(object sender, DayRenderEventArgs e)
+        {
+            using (var db = DatabaseHelper.Connect())
+            {
+                View View2 = (View)MultiView1.FindControl("View2");
+
+                if (View2 != null)
+                {
+                    CheckBox checkbox = (CheckBox)View2.FindControl("checkbox1");
+                    System.Web.UI.WebControls.Calendar cal1 = (System.Web.UI.WebControls.Calendar)View2.FindControl("Calendar1");
+                    var sqlSemester = "SELECT StartDate, EndDate FROM Semester WHERE Active = 1";
+                    var Semester = db.QuerySingle<Semester>(sqlSemester);
+
+                    DateTime StartDate = DateTime.Parse(Semester.StartDate).Date;
+                    DateTime EndDate = DateTime.Parse(Semester.EndDate).Date;
+
+                    var sqlA = $"SELECT Date FROM Appointment WHERE TutorId = '{TutorDDL.SelectedValue}' AND Time = '{TimeDDL.SelectedValue}'";
+                    var Appointment = db.Query<Appointment>(sqlA).ToList();
+
+                    var sqlAall = $"SELECT Date FROM Appointment WHERE Time = '{TimeDDL.SelectedValue}'";
+                    var AppointmentAll = db.Query<Appointment>(sqlAall).ToList();
+
+                    var sqlTO = $"SELECT Date FROM TimeOff WHERE TutorId = '{TutorDDL.SelectedValue}'";
+                    var TimeOff = db.Query<Appointment>(sqlTO).ToList();
+                    var sqlTOall = $"SELECT Date FROM TimeOff";
+                    var TimeOffAll = db.Query<Appointment>(sqlTOall).ToList();
+
+                    if (Semester != null && checkbox.Checked == false) //box unchecked = load all dates for chosen tutor from start to end of semester
+                    {
+                        if (e.Day.Date < Date.SelectedDate.AddDays(1) || e.Day.Date > DateTime.Today.AddDays(30) || StartDate > e.Day.Date || e.Day.Date > EndDate || e.Day.Date.DayOfWeek != Date.SelectedDate.DayOfWeek)
+                        {
+                            e.Day.IsSelectable = false;
+                            e.Cell.ForeColor = System.Drawing.Color.Gray;
+                        }
+
+                        foreach (var a in Appointment)
+                        {
+                            DateTime AppointmentDate = DateTime.Parse(a.Date).Date;
+                            if (AppointmentDate == e.Day.Date)
+                            {
+                                e.Day.IsSelectable = false;
+                                e.Cell.ForeColor = System.Drawing.Color.Gray;
+                            }
+                        }
+
+                        foreach (var t in TimeOff)
+                        {
+                            DateTime TimeOffDate = DateTime.Parse(t.Date).Date;
+                            if (TimeOffDate == e.Day.Date)
+                            {
+                                e.Day.IsSelectable = false;
+                                e.Cell.ForeColor = System.Drawing.Color.Gray;
+                            }
+                        }
+                    }
+                    else if (checkbox.Checked == true) //box checked = load all dates available for any tutor until end of semester (choose a tutor thats available on dates the other is available)
+                    {
+                        foreach (var a in AppointmentAll)
+                        {
+                            DateTime AppointmentDate = DateTime.Parse(a.Date).Date;
+                            if (AppointmentDate != e.Day.Date & (StartDate <= e.Day.Date || e.Day.Date <= EndDate || e.Day.Date.DayOfWeek == Date.SelectedDate.DayOfWeek))
+                            {
+                                e.Day.IsSelectable = true;
+                                e.Cell.ForeColor = System.Drawing.Color.Black;
+                            }
+                        }
+
+                        foreach (var t in TimeOffAll)
+                        {
+                            DateTime TimeOffDate = DateTime.Parse(t.Date).Date;
+                            if (TimeOffDate != e.Day.Date)
+                            {
+                                e.Day.IsSelectable = true;
+                                e.Cell.ForeColor = System.Drawing.Color.Black;
+                            }
+                        }
+
+                        if (e.Day.Date < Date.SelectedDate.AddDays(1) || e.Day.Date > DateTime.Today.AddDays(30) || StartDate > e.Day.Date || e.Day.Date > EndDate || e.Day.Date.DayOfWeek != Date.SelectedDate.DayOfWeek)
+                        {
+                            e.Day.IsSelectable = false;
+                            e.Cell.ForeColor = System.Drawing.Color.Gray;
+                        }
+                    }
+
+                    if (MultiView1.ActiveViewIndex == 3 && e.Day.Date > cal1.SelectedDate)
+                    {
+                        e.Day.IsSelectable = false;
+                        e.Cell.ForeColor = System.Drawing.Color.Gray;
+                    }
+
+                    List<DateTime> disabledDates = ViewState["DisabledDates"] as List<DateTime>;
+
+                    if (disabledDates != null)
+                    {
+                        foreach (var d in disabledDates)
+                        {
+                            DateTime disable = d;
+                            if (e.Day.Date == disable)
+                            {
+                                e.Day.IsSelectable = false;
+                                e.Cell.ForeColor = System.Drawing.Color.Gray;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        protected void DateSelectedtoview2(object source, EventArgs e)
+        {
+            View View2 = (View)MultiView1.FindControl("View2");
+
+            if (View2 != null)
+            {
+                Button button = (Button)View2.FindControl("Button2");
+                if (button != null)
+                {
+                    button.Enabled = true;
+                }
+            }
+        }
+
+        protected void DateSelectedtoRemove(object source, EventArgs e)
+        {
+            View View3 = (View)MultiView1.FindControl("View3");
+
+            if (View3 != null)
+            {
+                Button Remove = (Button)View3.FindControl("RemoveButton");
+                if (Remove != null)
+                {
+                    Remove.Enabled = true;
+                }
+            }
+        }
+
+        protected void Remove(object source, EventArgs e)
+        {
+            View View3 = (View)MultiView1.FindControl("View3");
+
+            if (View3 != null)
+            {
+                System.Web.UI.WebControls.Calendar cal2 = (System.Web.UI.WebControls.Calendar)View3.FindControl("Calendar2");
+                if (cal2.SelectedDate != DateTime.MinValue)
+                {
+                    List<DateTime> disabledDates = ViewState["DisabledDates"] as List<DateTime> ?? new List<DateTime>();
+                    DateTime selected = cal2.SelectedDate.Date;
+
+                    if (!disabledDates.Contains(selected))
+                    {
+                        disabledDates.Add(selected);
+                    }
+
+                    ViewState["DisabledDates"] = disabledDates;
+                    cal2.SelectedDate = DateTime.MinValue;
+                }
+            }
+        }
+
         protected void SubmitButton(object sender, EventArgs e)
         {
 
@@ -530,11 +695,17 @@ namespace TutorBookings
                             var rowsAffected = db.Execute(sql, insert);
                             Console.WriteLine($"{rowsAffected} row(s) inserted.");
                         }
-                        var sql2 = "INSERT INTO Student (StudentEmail, FirstName, LastName) VALUES (@StudentEmail, @FirstName, @LastName)";
+
+                        //sql to find students if student exists, return (this is why it says theres an error if the student isnt unique)
+                        var sql3 = $"SELECT StudentEmail FROM Student WHERE StudentEmail = '{email}'";
+                        if (db.ExecuteScalar<bool>("SELECT count(1) FROM Student where StudentEmail = @StudentEmail", new { StudentEmail = email }))
                         {
-                            var insert = new { StudentEmail = $"{email}", FirstName = $"{fName}", LastName = $"{lName}" };
-                            var rowsAffected = db.Execute(sql2, insert);
-                            Console.WriteLine($"{rowsAffected} row(s) inserted.");
+                            var sql2 = "INSERT INTO Student (StudentEmail, FirstName, LastName) VALUES (@StudentEmail, @FirstName, @LastName)";
+                            {
+                                var insert = new { StudentEmail = $"{email}", FirstName = $"{fName}", LastName = $"{lName}" };
+                                var rowsAffected = db.Execute(sql2, insert);
+                                Console.WriteLine($"{rowsAffected} row(s) inserted.");
+                            }
                         }
                     }
                     confirmed.Text = $"Tutoring with {TutorDDL.SelectedItem} for {CourseDDL.SelectedItem} on {date} at {TimeDDL.SelectedItem} is Scheduled!"; //after selection error once it doesnt do this when non selection error
@@ -551,12 +722,142 @@ namespace TutorBookings
                 Date.SelectedDate = DateTime.MinValue;
                 TutorDDL.SelectedValue = "0";
                 CourseDDL.SelectedValue = "0";
+                TimeDDL.EnableViewState = false;
+                TutorDDL.Items.Clear();
+                TutorDDL.Items.Add(new ListItem("Select", "0"));
+                LoadTutors();
+                CourseDDL.Items.Clear();
+                CourseDDL.Items.Add(new ListItem("Select", "0"));
+                LoadCourses();
             }
+        }
+
+        private List<DateTime> GetAvailableDates()
+        {
+            List<DateTime> availableDates = new List<DateTime>();
+            availableDates.Add(Date.SelectedDate);
+
+            using (var db = DatabaseHelper.Connect())
+            {
+                var sqlSemester = "SELECT StartDate, EndDate FROM Semester WHERE Active = 1";
+                var Semester = db.QuerySingle<Semester>(sqlSemester);
+
+                DateTime StartDate = DateTime.Parse(Semester.StartDate).Date;
+                DateTime EndDate = DateTime.Parse(Semester.EndDate).Date;
+
+                var sqlA = $"SELECT Date FROM Appointment WHERE TutorId = '{TutorDDL.SelectedValue}' AND Time = '{TimeDDL.SelectedValue}'";
+                var Appointment = db.Query<Appointment>(sqlA).ToList();
+
+                var sqlTO = $"SELECT Date FROM TimeOff WHERE TutorId = '{TutorDDL.SelectedValue}'";
+                var TimeOff = db.Query<TimeOff>(sqlTO).ToList();
+
+                var sqlAll = $""; 
+                var TutorsAll = db.Query<Appointment>(sqlTO).ToList();
+
+                List<DateTime> disabledDates = ViewState["DisabledDates"] as List<DateTime> ?? new List<DateTime>();
+
+                DayOfWeek targetDay = Date.SelectedDate.DayOfWeek;
+
+                View View2 = (View)MultiView1.FindControl("View2");
+                CheckBox checkbox = (CheckBox)View2.FindControl("checkbox1");
+                bool isBlocked = true;
+
+                for (DateTime d = Date.SelectedDate.AddDays(1); d <= EndDate; d = d.AddDays(1))
+                {
+                    if (d <= DateTime.Today.AddDays(30) && d.DayOfWeek == targetDay)
+                    {
+                        if (!checkbox.Checked) {
+                            isBlocked = Appointment.Any(a => DateTime.Parse(a.Date).Date == d) ||
+                                             TimeOff.Any(t => DateTime.Parse(t.Date).Date == d) ||
+                                             disabledDates.Contains(d);
+                        } else 
+                        {
+                            //all available dates for all tutors that tutor that course
+                        }
+
+                        if (!isBlocked)
+                        {
+                            availableDates.Add(d);
+                        }
+                    }
+                }
+            }
+            return availableDates;
         }
 
         protected void SubmitButton2(object sender, EventArgs e)
         {
-            MultiView1.ActiveViewIndex = 3;
+
+            //needs to check if the checkbox is checked and then add tutors accordingly 
+            List<DateTime> datesToBook = GetAvailableDates();
+
+            using (var db = DatabaseHelper.Connect())
+            {
+                foreach (DateTime apptDate in datesToBook)
+                {
+                    var sql = "INSERT INTO Appointment (TutorID, Date, Time, StudentEmail, CourseCode) VALUES (@TutorID, @Date, @Time, @StudentEmail, @CourseCode)";
+                    var insert = new
+                    {
+                        TutorID = $"{TutorDDL.SelectedValue}",
+                        Date = apptDate.ToString("yyyy-MM-dd"),
+                        Time = $"{TimeDDL.SelectedValue}",
+                        StudentEmail = $"{Email.Text}",
+                        CourseCode = $"{CourseDDL.SelectedValue}"
+                    };
+                    db.Execute(sql, insert);
+                }
+
+                if (!db.ExecuteScalar<bool>("SELECT count(1) FROM Student where StudentEmail = @StudentEmail", new { StudentEmail = Email.Text }))
+                {
+                    var sql2 = "INSERT INTO Student (StudentEmail, FirstName, LastName) VALUES (@StudentEmail, @FirstName, @LastName)";
+                    var insertStudent = new { StudentEmail = $"{Email.Text}", FirstName = $"{FName.Text}", LastName = $"{LName.Text}" };
+                    db.Execute(sql2, insertStudent);
+                }
+
+                var sqlStudent = "SELECT FirstName, LastName FROM Student WHERE StudentEmail = @StudentEmail";
+                var students = db.QuerySingle<Student>(sqlStudent, new { StudentEmail = Email.Text });
+
+                var sqlAppointment = "SELECT * " +
+                                      "FROM AppointmentView " +
+                                      "WHERE StudentEmail = @StudentEmail";
+                var appointments = db.Query<AppointmentView>(sqlAppointment, new { StudentEmail = Email.Text });
+
+                View View3 = (View)MultiView1.FindControl("View3");
+                Repeater AppointmentList = (Repeater)View3.FindControl("AppointmentList");
+
+                if (View3 != null)
+                {
+                    System.Web.UI.WebControls.Label confirmed = (System.Web.UI.WebControls.Label)View3.FindControl("Label1");
+                    if (confirmed != null)
+                    {
+                        confirmed.Text = $"Upcomming appointments for {students.FirstName} {students.LastName}:";
+                    }
+                }
+
+                AppointmentList.DataSource = appointments;
+                AppointmentList.DataBind();
+
+                MultiView1.ActiveViewIndex = 3;
+            }
+        }
+
+        protected void BackToBooking(object sender, EventArgs e)
+        {
+            Email.Text = "";
+            FName.Text = "";
+            LName.Text = "";
+            TimeDDL.SelectedValue = "0";
+            Date.SelectedDate = DateTime.MinValue;
+            TutorDDL.SelectedValue = "0";
+            CourseDDL.SelectedValue = "0";
+            TimeDDL.EnableViewState = false;
+            MultiView1.ActiveViewIndex = 0;
+            TutorDDL.Items.Clear();
+            TutorDDL.Items.Add(new ListItem("Select", "0"));
+            LoadTutors();
+            CourseDDL.Items.Clear();
+            CourseDDL.Items.Add(new ListItem("Select", "0"));
+            LoadCourses();
         }
     }
 }

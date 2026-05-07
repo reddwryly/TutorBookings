@@ -74,5 +74,14 @@ namespace TutorBookings.Database_SQL
             public string EndDate { get; set; }
             public string Active { get; set; }
         }
+
+        public class AppointmentView
+        {
+            public string FirstName { get; set; }
+            public string CourseName { get; set; }
+            public string CourseCode { get; set; }
+            public string Date { get; set; }
+            public string Time { get; set; }
+        }
     }
 }

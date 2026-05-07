@@ -21,7 +21,6 @@ namespace TutorBookings
                 LoadCourses();
             }
         }
-
         private void LoadCourses() {
             using (var db = DatabaseHelper.Connect()) { //uses the connection from the DatabaseHelper file in the Database_SQL folder
                 var sql = "SELECT CourseCode, Name FROM Course ORDER BY CourseCode"; //SQLite Query 
