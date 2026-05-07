@@ -26,6 +26,30 @@ namespace TutorBookings
             public string StudentEmail { get; set; }
         }
 
+        public class Tutor
+        {
+            public string TutorID { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public string FullName
+            {
+                get {  return FirstName + " " + LastName; }
+            }
+        }
+
+        private void LoadTutors()
+        {
+            using (var connection = DatabaseHelper.Connect())
+            {
+                var tutors = connection.Query<Tutor>("SELECT TutorID, FirstName, LastName FROM Tutor").ToList();
+                TutorDropdown.DataSource = tutors;
+                TutorDropdown.DataTextField = "FullName";
+                TutorDropdown.DataValueField = "TutorID";
+
+                TutorDropdown.DataBind();
+            }
+        }
+
         // helper function to retrieve appointment info
         private List<Appointment> GetAppointments()
         {
@@ -38,9 +62,11 @@ namespace TutorBookings
                         a.Time, 
                         a.StudentEmail, 
                         a.CourseCode,
-                        s.FirstName + ' ' + s.LastName AS StudentName
+                        s.FirstName || ' ' || s.LastName AS StudentName,
+                        t.FirstName || ' ' || t.LastName AS TutorName
                     FROM Appointment a
-                    LEFT JOIN Student s ON a.StudentEmail = s.StudentEmail"
+                    LEFT JOIN Student s ON a.StudentEmail = s.StudentEmail
+                    LEFT JOIN Tutor t ON a.TutorID = t.TutorID"
                     ).ToList();
             }
         }
@@ -50,6 +76,7 @@ namespace TutorBookings
             if (!IsPostBack)
             { 
                 LoadAppointments();
+                LoadTutors();
             }
         }
 
@@ -63,11 +90,6 @@ namespace TutorBookings
                 AppointmentsGrid.DataSource = appointments;
                 AppointmentsGrid.DataBind();
 
-                // DEBUG
-                foreach (var appt in appointments)
-                {
-                    Response.Write($"{appt.CourseCode} <br>");
-                }
             }
         }
 
@@ -105,7 +127,7 @@ namespace TutorBookings
 
                     new
                     {
-                        TutorID = TutorInput.Text.Trim(),
+                        TutorID = TutorDropdown.SelectedValue,
                         Date = DateInput.Text.Trim(),
                         Time = TimeInput.Text.Trim(),
                         StudentEmail = StudentEmailInput.Text.Trim(),
@@ -133,11 +155,20 @@ namespace TutorBookings
             // gets the new updated values
             GridViewRow row = AppointmentsGrid.Rows[e.RowIndex];
 
-            string tutorID = ((TextBox)row.Cells[2].Controls[0]).Text;
-            string courseCode = ((TextBox)row.Cells[3].Controls[0]).Text;
-            string date = ((TextBox)row.Cells[4].Controls[0]).Text;
-            string time = ((TextBox)row.Cells[5].Controls[0]).Text;
-            string studentEmail = ((TextBox)row.Cells[6].Controls[0]).Text.Trim();
+            DropDownList tutorDropdown = (DropDownList)row.FindControl("TutorDropdownEdit");
+            string tutorID = tutorDropdown.SelectedValue;
+
+            TextBox courseCodeTextbox = (TextBox)row.FindControl("CourseCodeTextbox");
+            string courseCode = courseCodeTextbox.Text.Trim();
+
+            TextBox dateTextBox = (TextBox)row.FindControl("DateTextBox");
+            string date = dateTextBox.Text.Trim();
+
+            TextBox timeTextBox = (TextBox)row.FindControl("TimeTextBox");
+            string time = timeTextBox.Text.Trim();
+
+            TextBox studentEmailTextBox = (TextBox)row.FindControl("StudentEmailTextBox");
+            string studentEmail = studentEmailTextBox.Text.Trim();
 
             // stores the original field values
             var keys = AppointmentsGrid.DataKeys[e.RowIndex];
@@ -180,16 +211,36 @@ namespace TutorBookings
                           OriginalTutorID = AppointmentsGrid.DataKeys[e.RowIndex].Values[0],
                           OriginalDate = AppointmentsGrid.DataKeys[e.RowIndex].Values[1],
                           OriginalTime = AppointmentsGrid.DataKeys[e.RowIndex].Values[2],
-                          OriginalStudentEmail = AppointmentsGrid.DataKeys[e.RowIndex].Values[3],
-                          OriginalCourseCode = AppointmentsGrid.DataKeys[e.RowIndex].Values[4]
                     });
 
-                // debug
-                Response.Write("Rows affected: " + rows);
             }
 
             AppointmentsGrid.EditIndex = -1;
             LoadAppointments();
+        }
+
+        protected void AppointmentsGrid_RowDataBound(
+            object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow && (e.Row.RowState & DataControlRowState.Edit) > 0)
+            {
+                DropDownList tutorDropdown = (DropDownList)e.Row.FindControl("TutorDropdownEdit");
+
+                if (tutorDropdown != null)
+                {
+                    using (var connection = DatabaseHelper.Connect())
+                    {
+                        var tutors = connection.Query<Tutor>(
+                            @"Select TutorID, FirstName, LastName FROM Tutor").ToList();
+
+                        tutorDropdown.DataSource = tutors;
+                        tutorDropdown.DataTextField = "FullName";
+                        tutorDropdown.DataValueField = "TutorID";
+
+                        tutorDropdown.DataBind();
+                    }
+                }
+            }
         }
     }
 }

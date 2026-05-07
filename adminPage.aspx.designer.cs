@@ -24,13 +24,22 @@ namespace TutorBookings
         protected global::System.Web.UI.WebControls.GridView AppointmentsGrid;
 
         /// <summary>
-        /// TutorInput control.
+        /// TutorLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TutorInput;
+        protected global::System.Web.UI.WebControls.Label TutorLabel;
+
+        /// <summary>
+        /// TutorDropdown control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList TutorDropdown;
 
         /// <summary>
         /// DateInput control.

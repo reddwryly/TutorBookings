@@ -1,23 +1,10 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true"
     CodeBehind="adminPage.aspx.cs"
-    Inherits="TutorBookings.adminPage" %>
+    Inherits="TutorBookings.adminPage"
+    MasterPageFile="~/Site.Master" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Appointments</title>
-
-    <style>
-        body { font-family: Arial; }
-        table { border-collapse: collapse; width: 60%; }
-        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-        th { background-color: #eee; }
-    </style>
-</head>
-
-<body>
-    <form runat="server">
-        <h2>Appointments</h2>
+    <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+        <h2>Admin Page</h2>
 
         <asp:GridView 
             ID="AppointmentsGrid" 
@@ -27,16 +14,60 @@
             OnRowEditing="AppointmentsGrid_RowEditing"
             OnRowUpdating="AppointmentsGrid_RowUpdating"
             OnRowCancelingEdit="AppointmentsGrid_RowCancelingEdit"
-            DataKeyNames="TutorID,Date,Time,StudentEmail,CourseCode">
+            DataKeyNames="TutorID,Date,Time,StudentEmail,CourseCode"
+            OnRowDataBound="AppointmentsGrid_RowDataBound">
 
             <Columns>
-                <asp:BoundField DataField="Id" HeaderText="ID" ReadOnly="false" />
-                <asp:BoundField DataField="StudentName" HeaderText="Student" ReadOnly="true"/>
-                <asp:BoundField DataField="TutorID" HeaderText="Tutor" ReadOnly="false"/>
-                <asp:BoundField DataField="CourseCode" HeaderText="Course Code" ReadOnly="false"/>
-                <asp:BoundField DataField="Date" HeaderText="Date" ReadOnly="false"/>
-                <asp:BoundField DataField="Time" HeaderText="Time" ReadOnly="false"/>
-                <asp:BoundField DataField="StudentEmail" HeaderText="Student Email" ReadOnly="false"/>
+                <asp:BoundField DataField="StudentName" HeaderText="Student Name" ReadOnly="true"/>
+                <asp:TemplateField HeaderText="Tutor Name">
+                    <ItemTemplate>
+                        <%#Eval("TutorName") %>
+                    </ItemTemplate>
+
+                    <EditItemTemplate>
+                        <asp:DropDownList ID="TutorDropDownEdit" runat="server">    </asp:DropDownList>
+                    </EditItemTemplate>
+                </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="Course Code">
+                    <ItemTemplate>
+                        <%#Eval("CourseCode") %>
+                    </ItemTemplate>
+
+                    <EditItemTemplate>
+                        <asp:TextBox ID="CourseCodeTextBox" runat="server" Text='<%# Bind("CourseCode") %>' />
+                    </EditItemTemplate>
+                </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="Date">
+                    <ItemTemplate>
+                        <%#Eval("Date") %>
+                    </ItemTemplate>
+
+                    <EditItemTemplate>
+                        <asp:TextBox ID="DateTextBox" runat="server" Text='<%# Bind("Date") %>' />
+                    </EditItemTemplate>
+                </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="Time">
+                    <ItemTemplate>
+                        <%#Eval("Time") %>
+                    </ItemTemplate>
+
+                    <EditItemTemplate>
+                        <asp:TextBox ID="TimeTextBox" runat="server" Text='<%# Bind("Time") %>' />
+                    </EditItemTemplate>
+                </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="Student Email">
+                    <ItemTemplate>
+                        <%#Eval("StudentEmail") %>
+                    </ItemTemplate>
+
+                    <EditItemTemplate>
+                        <asp:TextBox ID="StudentEmailTextBox" runat="server" Text='<%# Bind("StudentEmail") %>' />
+                    </EditItemTemplate>
+                </asp:TemplateField>
 
                 <asp:TemplateField HeaderText="Action">
                     <ItemTemplate>
@@ -77,7 +108,9 @@
 
         <h3> Add Apppointment</h3>
 
-        <asp:TextBox ID="TutorInput" runat="server" Placeholder="Tutor Name" />
+        <asp:Label ID="TutorLabel" runat="server" Text="Select Tutor: " AssociatedControlID="TutorDropdown"/>
+        <br />
+        <asp:DropDownList ID="TutorDropdown" runat="server" />
         <asp:TextBox ID="DateInput" runat="server" Placeholder="Date" />
         <asp:TextBox ID="TimeInput" runat="server" Placeholder="Time" />
         <asp:TextBox ID="StudentEmailInput" runat="server" Placeholder="Student Email" />
@@ -89,7 +122,4 @@
             runat="server"
             Text="Add"
             OnClick="AddButton_Click" />
-
-    </form>
-</body>
-</html>
+    </asp:Content>
