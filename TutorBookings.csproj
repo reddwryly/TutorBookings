@@ -50,6 +50,10 @@
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=9.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.9.0.1\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
@@ -172,6 +176,7 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="adminPage.aspx" />
     <Compile Include="adminPage.aspx.cs">
       <DependentUpon>adminPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -243,13 +248,7 @@
     <Compile Include="BecomeTutor.aspx.designer.cs">
       <DependentUpon>BecomeTutor.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Resume.aspx.cs">
-      <DependentUpon>Resume.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Resume.aspx.designer.cs">
-      <DependentUpon>Resume.aspx</DependentUpon>
-    </Compile>
+    
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
