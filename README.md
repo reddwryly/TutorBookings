@@ -17,10 +17,7 @@ This collaborative project is a web application that connects tutors and student
 - Scheduling webform
 - Reccuring appointment logic
 
-**Braeden @ThatRedBacon**
-- HTML/CSS
-- Admin Page webform
-- Database implementation with admin page
+** Braeden @ThatRedBacon**
 
 ## Project Status
 
