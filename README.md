@@ -23,7 +23,10 @@ This collaborative project is a web application that connects tutors and student
 
 Currently Working On: 
  - Recurring appointment logic
- - Admin page 
+ - Admin page
+   - Visual design
+   - Manually-created appointments by admin
+   - Unique Appointment ID and Student Names
 
 > Completed:
 > * Baseline HTML/CSS
