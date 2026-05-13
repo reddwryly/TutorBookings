@@ -285,7 +285,7 @@
 					<NTLMAuthentication>False</NTLMAuthentication>
 					<UseCustomServer>False</UseCustomServer>
 					<CustomServerUrl>
-					</CustomServerUrl>a
+					</CustomServerUrl>
 					<SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
 				</WebProjectProperties>
 			</FlavorProperties>
