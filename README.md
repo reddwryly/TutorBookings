@@ -17,19 +17,21 @@ This collaborative project is a web application that connects tutors and student
 - Scheduling webform
 - Reccuring appointment logic
 
-** Braeden @ThatRedBacon**
+**Braeden @ThatRedBacon**
+- HTML/CSS
+- Admin Page webform
+- Database implementation with admin page
+  
+## Project Status: Completed
 
-## Project Status
-
-Currently Working On: 
- - Recurring appointment logic
- - Admin page
-   - Visual design
-   - Manually-created appointments by admin
-   - Unique Appointment ID and Student Names
+Left incomplete: 
+- Scheduler reassigning a tutor when the chosen tutor is available for a recurring appointment
 
 > Completed:
 > * Baseline HTML/CSS
 > * Database design/implementation
 > * Database Connection
 > * Apointment Scheduling Form
+> * Recurring appointment logic
+> * Manually-creat appointments by admin
+> * Unique Appointment ID and Student Names
